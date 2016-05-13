@@ -591,7 +591,13 @@ $_GET['ma_var'] = htmlspecialchars_decode( $_GET['ma_var'] );
 <a name="bdd"></a>
 ## Base de données
 
-Se connecter à une Base de données:
+Le Framework utilise le gestionnaire de Base de données "Pixie Query Builder"<br/>
+La documentation est disponible à cette adresse:
+
+https://github.com/usmanhalalit/pixie
+
+
+Se connecter à une Base de données Mysql ( par défault ):
 ```php
 App::bdd('localhost')
 ->user('root')
@@ -600,9 +606,17 @@ App::bdd('localhost')
 ->connexion();
 ```
 
-Le gestionnaire de Base de données utilise "Pixie Query Builder"<br/>
-Documentation:<br/>
-https://github.com/usmanhalalit/pixie
+Connexion SqlLite:
+```php
+//Rajouter avant connexion()
+->driver('sqlite')
+```
+
+Connexion PostgreSQL
+```php
+//Rajouter avant connexion()
+->driver('pgsql')
+```
 
 Exemple de request effectuable grâce au Query Builder Pixie:
 ```php
