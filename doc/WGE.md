@@ -1,23 +1,13 @@
 # Web Goupil Engine:
 
-Le Web Goupil Engine est un programme écrit en PHP, et conçu pour permettre la création de site internet ou web application moderne facilement. Il a été conçu dans l'optique de faciliter l'apprentissage et utilisation du Framework par des programmeurs de tout niveaux !
+Le Web Goupil Engine est un framework écrit en PHP, et conçu pour permettre la création de site internet ou web application moderne facilement. Il a été conçu dans l'optique de faciliter l'apprentissage et utilisation du Framework par des programmeurs de tout niveaux !
 
-
-__Les principales fonctionnalités sont :__
-* Gestion multi-sites.
-* Architecture simple.
-* Gestion de Plugin.
-* Gestion de Registre.
-* Serveur et client REST.
-* Gestion des Routes, Firewall, ...
-* Template TWIG.
-* ...
-
+Ce Framework intègre par default plusieurs fonctionnalisées, tel que la gestion de plusieurs site sur un seul hébergement ainsi que la création de serveur RESTful, tout ça couplé avec le moteur de Template TWIG ou affichage JSON pour les Web applications.
+Il prend aussi en charge tout un panel de fonctionnalités très simple pour manipuler les différentes interfaces du Framework ainsi que la création de route propre très simplement !
 
 # Sommaire
-* [Arborescence](#arborescence)
-* [Fichier racine index.php](#index.php)
-* [Création de Plugin](#plugins)
+* [Getting started](#home)
+* [Création de Plugin & Homes](#plugins)
 * [Gestion des Hosts](#hosts)
 * [Route et controller](#route)
 * [Gestion des erreurs HTTP](#error)
@@ -32,14 +22,20 @@ __Les principales fonctionnalités sont :__
 
 
 <br/><br/><br/>
-<a name="arborescence"></a>
-## Arborescence
+<a name="home"></a>
+## Getting started
 
-L'arborescence du projet est composée de quatre dossiers et 3 fichiers:
+Une fois les sources récupéré et copié à la racine du répértoire de votre serveur apache. vous allez vous retrouvez avec un répértoire resemblant à ca:
+
+![arborescence](https://github.com/Elrenardo/Web-Goupil-Engine/blob/master/doc/img/arbo_0.png)
+
+L'arborescence du projet est composée de 3 dossiers et 3 fichiers:
 
 - Un dossier "__doc__", qui contient la documentation du "Web Goupil Engine".
 
-- Deux autres dossiers "__homes__" et "__plugins__", qui contiennent tous les deux des plugins. Le dossier "plugins" contient des plugins génériques, qui peuvent être utilisés dans différents sites. Tandis que le dossier "homes" contient les plugins spécifiques à chaque site, géré par le Framework.<br/>
+- Un dossier "__homes__", qui contient chaques site internet de l'hébergement.
+
+- Un dossier "__plugins__", qui contient les plugins que peuvent utiliser les sites de l'hébergement. 
 
 - Un dossier "__vendor__", qui contient les dépendances du projet. Il est géré par le programme "__composer__". Ce programme gère également la configuration du projet qui se trouve dans le fichier "__composer.json__".
 
@@ -47,11 +43,7 @@ L'arborescence du projet est composée de quatre dossiers et 3 fichiers:
 
 - Et pour finir un fichier "__index.php__" qui contient la configuration des sites web géré par le Framework que nous verrons juste après.
 
-
-
-<br/><br/><br/>
-<a name="index.php"></a>
-## Fichier racine index.php
+-----------
 
 Le fichier index.php est le fichier qui contient la configuration et la gestion des différents sites web géré par le Framework.
 
@@ -72,52 +64,64 @@ Voici un exemple d'index pour la gestion d'un seul site avec un plugin:
 require_once './vendor/autoload.php';
 use WGE\App;
 
-//Création du plugin home pour mon premier site
-App::plugin('monSite')->path('homes/monSite/')->add('site.php');
+//Création d'un home pour mon premier site
+App::home('monSite')->path('homes/monSite/')->file('site.php');
 
 //Création du Host de mon premier site
 $host_current = App::getCurrentHost();
 App::host( $host_current )->pluginHome('monSite');
 ```
-Nous verrons plus en détails le fonctionnement de cette exemple par la suite mais j'attire votre attention sur la class static "__App__".
+Nous verrons plus en détails par la suite le fonctionnement de cette exemple. J'attire votre attention sur la class static "__App__".
 
-Cette class static et une interface d'utilisation entre vous et le fonctionnement de "Web Goupil Engine". Elle vous fournit tout ce dont vous avez besoin pour créer votre site rapidement et facilement et s'occupera du reste (comme l'initialisation et la configuration du kernel, des routes, services ...)
-
-
+Cette class static et une interface d'utilisation entre vous et le fonctionnement de "Web Goupil Engine". Elle vous fournit tout ce dont vous avez besoin pour créer et configurer votre site ou web application rapidement et facilement et s'occupera du reste (comme l'initialisation et la configuration du kernel, des routes, services ...)
 
 
 
 <br/><br/><br/>
 <a name="plugins"></a>
-## Création de plugins
+## Création de plugins & Homes
 
-Nous venons de voir le fichier index.php et nous allons parler d'un fonctionnement essentiel: les __plugins__.
+Nous venons de voir le fichier index.php et nous allons parler d'un fonctionnement essentiel: les __plugins__ et __homes__
 
 Reprenons cette ligne:
 ```php
-//Création du plugins pour mon premier site
-App::plugin('monSite')->path('homes/monSite/')->add('site.php');
+//Création d'un home pour mon premier site
+App::home('monSite')->path('homes/monSite/')->file('site.php');
 ```
-Les plugins sont l'essence même du Framework. La commande "App::plugin()" permet de déclarer un nouveau plugin. Chaque plugin doit avoir un nom différent pour éviter de potentiels conflits entre eux.
+Les homes sont l'essence même du Framework. La commande "App::homes()" permet de déclarer un nouvel "home" qui est représente un site ou web application.
+
+Les "home" et "plugin" fonctionne exactement pareil, leurs noms est différents pour permettre de mieux les différencier lors de leurs déclarations. Car un "home" contient un site et un "plugin" un ajout de fonctionalité pour un site.
+Chaque "plugin" ou "home" doit avoir un nom différent pour éviter de potentiels conflits entre eux.
+```php
+//Création d'plugin pour mon premier site
+App::plugin('monPlugin')->path('plugins/monPlugins/')->file('plugin.php');
+```
 
 Dans "Web Goupil Engine", tous les composants ont une syntaxe identique de déclaration au format:
 ```php
 //J'appelle l'interface App
 App::plugin('le_nom_du_plugin')
-//Suivie des paramettres
+//J'ajoute des paraméttres au plugin
 ->path('/plugins/admin/')
 ->add('admin.php');
 ```
-L’interface App::plugin() renvoi une instance de la class \WGE\Plugin.
+
+L’interface App::home() renvoi une instance de la class \WGE\Plugin.
 Cette class prend deux paramètres possible:
+
 * __path( string )__ : Le chemin vers la racine du dossier du plugin (exemple: /plugins/users/ ou /homes/web/ )
-* __add( string )__ le fichier à exécuter dans le dossier identifié par le "path". Le fichier ciblé contient les instructions du plugin.
 
-Dans l'exemple au-dessus, on peut donc voir que le fichier 'admin.php' se trouve dans le répertoire 'plugins/admin/admin.php' et que la racine du répertoire est 'plugins/admin/'.
-
-Le contenu du plugin ne sera chargé que lors de sa déclaration. Il attendra d'être exécuté par une class "Host".
+* __file( string )__ le fichier à exécuter dans le dossier identifié par le "path". Le fichier ciblé contient les instructions du plugin.
 
 
+Dans l'exemple au-dessus, on peut donc voir que le fichier 'admin.php' se trouve dans le répertoire 'plugins/admin/admin.php' et que la racine du répertoire est 'plugins/admin/'. Dans un "home" ou "plugin" chaque personne est libre d'organiser son arborescence comme elle veux.
+
+Nous pouvons par exemple avec une arborescence resemblant à celà: 
+
+![arborescence](https://github.com/Elrenardo/Web-Goupil-Engine/blob/master/doc/img/arbo_1.png)
+Dans l'exemple ci-dessus nous pouvons que, il y a trois site "studiogoupil", "monSite", "blog" ainsi que deux plugins: "admin", "users".
+
+Le contenu d'un "home" ou "plugin" ne sera chargé que si un "Host" vient à l'appeler !
 
 
 
@@ -125,29 +129,32 @@ Le contenu du plugin ne sera chargé que lors de sa déclaration. Il attendra d'
 <a name="hosts"></a>
 ## Gestion des Hosts
 
-La gestion des "hosts" permet l'utilisation des fonctionnalisées __multi-site__ ou d'activer ou non des plugins pour certains site.
+La gestion des "hosts" permet l'utilisation des fonctionnalisées __multi-site__ ou d'attribuer ou non des plugins sur crtains site ou web application.
 
-Revenons donc à notre exemple:
+Revenons donc à notre premier exemple et plus particuliérement à la ligne d l'Host:
 ```php
+//Récupérer le nom de domaine
 $host_current = App::getCurrentHost();
+//Création dun HOST qui utilisera le home: "monSite"
 App::host( $host_current )->pluginHome('monSite');
 ```
 Ici, je vais demander à l'interface "App" de me donner une instance de la class "__Host__" qui me permettra d'y attacher des plugins.
 ```php
+//Host qui sera utilisé pour l'adresse: "monsite.fr"
 App::host('monsite.fr');
 ```
-Avec cette ligne je créé un host uniquement si l'utilisateur demande l'URL: "monsite.fr", je peux ainsi créer plusieurs host pour chaque __nom de domaine__.
+Avec cette ligne je créé un host uniquement si l'utilisateur demande l'URL: "monsite.fr", je peux ainsi créer plusieurs host pour chaque __nom de domaine__ sur mon hébergement.
 
 
-Créer un host c'est bien, mais s’il n'utilise pas de plugin ça ne sert à rien.
+Créer un host c'est bien, mais s’il n'utilise pas de home ça ne sert à rien.
 ```php
-//Je déclare mon host 'monsite.fr' et j'y ajoute le plugin 'monSite'
+//Je déclare mon host 'monsite.fr' et j'y ajoute le home 'monSite'
 App::host('monsite.fr')->pluginHome('monSite);
 ```
-Pour qu'un host fonctionne, l'un des plugins doit être un __plugin home__ (dans /homes). Ce plugin contient le site internet.
+Pour qu'un host fonctionne, il est composé en premier des __plugin__ ( dans: /plugins/ ) et en dernier sont __home__ (dans: /homes/). Ce plugin contient le site internet.
 
 
-Si je veux rajouter un plugin générique (dans /plugins):
+Si je veux rajouter un plugin (dans /plugins/):
 ```php
 App:plugin('admin')->path('plugins/admin/')->add('admin.php');
 //Je déclare mon host 'monsite.fr' et j'y ajoute le plugin 'admin' et l'home 'monSite'
@@ -162,7 +169,7 @@ Voici un autre exemple:
 App::host('vador.fr')->plugin('empire')->plugin('troopers')->pluginHome('etoileNoir');
 ```
 
-Mais je fais comment si mon site contient qu’un site web ou si je ne connais pas mon nom de domaine ?
+Mais je fais comment si mon site contient qu’un site web ou si je ne connais pas le nom de domaine ?
 ```php
 //Renvoi le nom de domaine utilisé par le visiteur du site
 $host_current = App::getCurrentHost();
@@ -177,12 +184,12 @@ $host_current = App::getCurrentHost();
 ## Route et controller
 
 Maintenant que nous avons vu comment gérer les host, passons maintenant au contenu des plugins.
-Nous avons vu que chaque plugin appelle via la méthode "__add( string )__" un fichier PHP qui contient la configuration du plugin:
+Nous avons vu que chaque plugin ou home appelle via la méthode "__file( string )__" un fichier PHP qui contient la configuration du plugin:
 ```php
-App::plugin('monSite')->path('homes/monSite/')->add('site.php');
+App::home('monSite')->path('homes/monSite/')->file('site.php');
 ```
 
-Voici donc le contenu minimal de ce fichier 'site.php'
+Voici donc le contenu minimal de ce fichier 'site.php' c trouvant dans le répertoire /homes/monSite/
 ```php
 <?php
 use WGE\App;
@@ -206,34 +213,45 @@ Maintenant, si vous rechargez la page vous verrez un magnifique "Hello World !".
 __<b style="color:red;">/!\ Il n'est pas conseillé d'écrire du code autre que celui de "Web Goupil Engine" en dehors d'un "controller()". Cela peut nuire au bon fonctionnement du Framework !</b>__
 
 Le fonctionnement des routes est très simple. Dans un premier temps, vous déclarez le chemin de la route (ici: / pour indiquer la racine). Mais nous pouvons aussi bien faire des routes comme ceci:
+
 * / 
+
 * /pages/cv
+
 * /info/actualite/2
+
 * /magasin/[a:id]
+
 
 Le dernier cas est un cas spécifique qui vous permet de récupérer des paramètres dans la route.
 ```
 [ filtre : nom_variable ]
 ```
 Listes des filtres possibles pour les routes:
+
 * __i__ : nombres
+
 * __a__ : caractères
+
 * __\*__ : nombre et caractères
+
 * __\**__ : tout !
+
 * __?__ : paramètre facultatif
+
 
 Ce qui nous permet d'écrire des routes comme:
 ```php
-//Exemple de route
+//Exemple de route avec paraméttres
 App::route('/pages/[a:id]');
 App::route('/info/[i:id]/[**:clef]');
 App::route('/print/[*:id]?');
 App::route('/promo/?[i:code]?');
 ```
 
-Une fois la route créée, un controller est appelé s’il est précisé !
-Le controlleur permet d'exécuter un certain nombre d'actions si la route est appelée.
-Le controller peut prendre plusieurs types de variable :
+Une fois la route créée, s’il est précisé un controller sera appelé !
+
+Le controlleur permet d'exécuter un certain nombre d'actions si la route est appelée. il peut prendre plusieurs types de variable :
 ```php
 //Afficher du texte
 ->controller('texte à afficher')
@@ -248,10 +266,18 @@ Le controller peut prendre plusieurs types de variable :
 })
 ```
 Lors de l'utilisation de fonction, les deux paramètres sont:
+
 * la route utilisée !
+
 * les paramètres dans un array de la route __[i:id]__ sera disponible dans __$params['id']__
 
-Je peux aussi limiter l'appel à la route selon le type d'envoi:
+```php
+App::route('/article/[a:id]')->controller(function( $route, $params ){
+    return 'ID de l'article: '.$params['id'];
+})->method('GET');
+````
+
+Vous pouvez aussi limiter l'appel à la route selon le type d'envoi:
 ```php
 //uniquement GET
 ->method('GET')
@@ -263,7 +289,7 @@ Je peux aussi limiter l'appel à la route selon le type d'envoi:
 ->method('GET|POST')
 ```
 
-Effectuer une redirection vers une route:
+Et aussi effectuer une redirection vers une route:
 ```php
 //On redirige la page vers /home/user
 ->redirect('/home/user')
@@ -283,6 +309,9 @@ App::route('/hello')->controller('Bonjour !');
 App::route('/json')->controller( array(...))->method('GET|POST');
 ```
 
+Récapitulatif de l'ordre de traitement des routes:
+
+![ordre route](https://github.com/Elrenardo/Web-Goupil-Engine/blob/master/doc/img/wge-route.png)
 
 
 <br/><br/><br/>
@@ -297,6 +326,19 @@ App::error( 404 )->controller('Il n\'y a rien ici !');
 ```
 L'interface "__App::error()__" renvoie une class Route qui peut être utilisée et paramétrée comme n'importe quelle autre route.
 
+Listes des principales type d'erreur HTTP:
+
+* 301 et 302 : redirection, respectivement permanente et temporaire ;
+
+* 401 : utilisateur non authentifié ;
+
+* 403 : accès refusé ;
+
+* 404 : page non trouvée ;
+
+* 500 et 503 : erreur serveur.
+
+
 
 
 
@@ -310,17 +352,17 @@ Nous allons maintenant voir les Template.
 "Web Goupil Engine" utilise le moteur de Template TWIG : http://twig.sensiolabs.org/
 Ce moteur de Template gère énormément de choses tels que l'héritage de Template ou le traitement d'informations directement dedans.
 
-Documentation pour la réalisation de Template TWIG:<br/>
+Vous pouvez trouver la documentation pour la réalisation de Template TWIG à cette adresse:<br/>
 http://twig.sensiolabs.org/doc/templates.html
 
 Comment créer un nouveau Template dans un __plugin__:
 ```php
 App::template('my_template')->path('tpl/index.twig');
 ```
-Cette ligne va créer la Template du nom de __my_template__ dont les fichiers se retrouveront dans le dossier 'tpl/index.twig' __de mon répertoire plugin !__
+Cette ligne va créer la Template du nom de __my_template__ dont les fichiers se trouve dans le dossier 'tpl/index.twig' __de mon répertoire plugin__ en cours d'utilisation.
 
 
-Utilisation d'un Template avec une route:
+Utilisation d'une Template avec une route:
 ```php
 App::route('/')->template('my_template');
 ```
@@ -334,6 +376,8 @@ App::route('/')->template('my_template');
 {{ pathUrl('/tpl/image.jpg') }} <!-- Donnera: http://127.0.0.1/homes/mySite/tpl/image.jpg -->
 
 ```
+
+Dans le cas où un Template est défini dans la route, les informations retournées par le controller (return) seront transmis dans le Template sinon ça sera les paramètres de la route s’ils sont présents.
 
 Passage de paramètres au Template:
 ```php
