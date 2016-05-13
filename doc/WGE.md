@@ -566,6 +566,9 @@ App::addService( 'nom_de_mon_service', new myClass() );
 $service = App::getService( 'nom_de_mon_service' );
 ```
 
+Architecture de fonctionement de "Web Goupil Engine":
+
+![architecture](https://github.com/Elrenardo/Web-Goupil-Engine/blob/master/doc/img/wge_plan.png)
 
 
 <br/><br/><br/>
