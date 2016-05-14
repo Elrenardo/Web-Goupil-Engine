@@ -465,7 +465,7 @@ App::route('/info/vaucluse/data/new/[*:article]')->name('pages_article');
 App::route('/')->name('index');
 
 //Efectuer une redirection avec une route
-App::route('/action/new')redirect( App::getPathRoute('nom_de_la_route') );
+App::route('/action/new')->redirect( App::getPathRoute('nom_de_la_route') );
 ```
 
 Récupérer la route en PHP:
