@@ -459,10 +459,13 @@ Il est possible de nommer une route pour ne pas avoir à retaper son chemin à c
 Le nommage de route vous permettra aussi de __résoudre automatiquement les problémes de lien__ sur vôtre site.
 ```php
 //Nommer une route
-App::route('/info/vaucluse/data/new/[*:article]->name('pages_article');
+App::route('/info/vaucluse/data/new/[*:article]')->name('pages_article');
 
 //Exemple de création de la page d'index et d'y attribution de son nom
 App::route('/')->name('index');
+
+//Efectuer une redirection avec une route
+App::route('/action/new')redirect( App::getPathRoute('nom_de_la_route') );
 ```
 
 Récupérer la route en PHP:
