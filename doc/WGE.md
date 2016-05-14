@@ -69,7 +69,7 @@ App::home('monSite')->path('homes/monSite/')->file('site.php');
 
 //Création du Host de mon premier site
 $host_current = App::getCurrentHost();
-App::host( $host_current )->pluginHome('monSite');
+App::host( $host_current )->home('monSite');
 ```
 Nous verrons plus en détails par la suite le fonctionnement de cette exemple. J'attire votre attention sur la class static "__App__".
 
@@ -123,6 +123,10 @@ Dans l'exemple ci-dessus nous pouvons que, il y a trois site "studiogoupil", "mo
 
 Le contenu d'un "home" ou "plugin" ne sera chargé que si un "Host" vient à l'appeler !
 
+Il ce peux que vous utilisez le framework en dehors de la racine de vôtre hebergement (ou serveur local) dans ce cas, il faudra préciser au Framework le dossier courent d'utiliation:
+```php
+App::setBasePath('monDossier1/mondossier2/');
+```
 
 
 <br/><br/><br/>
@@ -136,7 +140,7 @@ Revenons donc à notre premier exemple et plus particuliérement à la ligne d l
 //Récupérer le nom de domaine
 $host_current = App::getCurrentHost();
 //Création dun HOST qui utilisera le home: "monSite"
-App::host( $host_current )->pluginHome('monSite');
+App::host( $host_current )->home('monSite');
 ```
 Ici, je vais demander à l'interface "App" de me donner une instance de la class "__Host__" qui me permettra d'y attacher des plugins.
 ```php
@@ -149,7 +153,7 @@ Avec cette ligne je créé un host uniquement si l'utilisateur demande l'URL: "m
 Créer un host c'est bien, mais s’il n'utilise pas de home ça ne sert à rien.
 ```php
 //Je déclare mon host 'monsite.fr' et j'y ajoute le home 'monSite'
-App::host('monsite.fr')->pluginHome('monSite);
+App::host('monsite.fr')->home('monSite);
 ```
 Pour qu'un host fonctionne, il est composé en premier des __plugin__ ( dans: /plugins/ ) et en dernier sont __home__ (dans: /homes/). Ce plugin contient le site internet.
 
@@ -158,15 +162,15 @@ Si je veux rajouter un plugin (dans /plugins/):
 ```php
 App:plugin('admin')->path('plugins/admin/')->add('admin.php');
 //Je déclare mon host 'monsite.fr' et j'y ajoute le plugin 'admin' et l'home 'monSite'
-App::host('monsite.fr')->plugin('admin')->pluginHome('monSite');
+App::host('monsite.fr')->plugin('admin')->home('monSite');
 ```
-L'ordre de chargement des plugins est très important car certains plugins ont besoin d'autres plugins pour fonctionner. __le "pluginHome" sera toujours le dernier !__
+L'ordre de chargement des plugins est très important car certains plugins ont besoin d'autres plugins pour fonctionner. __le "home" sera toujours le dernier !__
 
 
 
 Voici un autre exemple:
 ```php
-App::host('vador.fr')->plugin('empire')->plugin('troopers')->pluginHome('etoileNoir');
+App::host('vador.fr')->plugin('empire')->plugin('troopers')->home('etoileNoir');
 ```
 
 Mais je fais comment si mon site contient qu’un site web ou si je ne connais pas le nom de domaine ?
@@ -367,7 +371,7 @@ Utilisation d'une Template avec une route:
 App::route('/')->template('my_template');
 ```
 
-'Web Goupil Engine' ajoute automatiquement plusieurs fonctions au Template TWIG pour vous faciliter son utilisation:
+'Web Goupil Engine' ajoute automatiquement plusieurs fonctions au Template TWIG pour vous faciliter son utilisation. En voici quelques une:
 ```html
 <!-- Convertit le chemin d'un plugin en chemin complet -->
 {{ path('/tpl/image.jpg') }} <!-- Donnera: /homes/mySite/tpl/image.jpg -->
@@ -451,21 +455,30 @@ Tester une authorisation dans les Templates:
 ## Nommer une route
 
 Il est possible de nommer une route pour ne pas avoir à retaper son chemin à chaque fois que vous l'utilisez. De plus, si vous modifiez le chemin de votre route, toutes les routes s'actualiseront automatiquement !
+
+Le nommage de route vous permettra aussi de __résoudre automatiquement les problémes de lien__ sur vôtre site.
 ```php
+//Nommer une route
 App::route('/info/vaucluse/data/new/[*:article]->name('pages_article');
+
+//Exemple de création de la page d'index et d'y attribution de son nom
+App::route('/')->name('index');
 ```
 
 Récupérer la route en PHP:
 ```php
-//TODO
+App::getPathRoute('le_nom_de_ma_route');
 ```
 
 Récupérer la route dans un template:
 ```html
-{{ route('pages_article') }}
+{{ route('le_nom_de_ma_route','paramettre') }}
 
-<!--Exemple avec le paramètre: -->
-<a href="{{ route('pages_article' }}5865a" ></a>
+<!--Exemple normal: -->
+<a href="{{ route('le_nom_de_ma_route') }}" ></a>
+
+<!--Exemple avec utilisation de paramètre: -->
+<a href="{{ route('pages_article', '5865a') }}" ></a>
 ```
 
 
@@ -496,8 +509,11 @@ class Joueur{
 App::RESTserveur('nom_du_serveur_rest')->instance( new Joueur() );
 ```
 Si je veux appeler via une URL la method "name" de la class "Joueur", il suffira de taper dans une barre d'addresse:
-```
-/rest/nom_du_serveur_rest/name
+```html
+www.monsite.fr/rest/nom_du_serveur_rest/name
+
+<!-- Je peux aussi appellé une route REST ave le nom 'REST' suivies des paramétres: -->
+{{ route('REST', 'nom_du_serveur_rest/name') }}
 ```
 Comme toutes les routes, si le return est un array, alors le message sera traduit en JSON.
 
