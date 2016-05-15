@@ -677,13 +677,13 @@ Nous voici dans la dernières partie de la documentions du Framework. Nous allon
 Le support multi-langage fonctionne sous le principe d'attribuer une clef de traduction et d'y attacher ca valeur traduite en plusieurs langues.
 ```php
 //On défini dans qu'elle langue on veux les traductions:
-App::setTranslateLang( 'fr' );
+App::setTranslateLang( 'ita' );
 
 //Ajouter des traductions
-App::translate( 'BONJOUR' )->set('fr','Bonjour')->set('en','Hello')->set('ita','Ciao');
+App::translate( 'BONJOUR' )->set('fr','Bienvenu sur mon site')->set('en','Welcome my site')->set('ita','Benvenuti nel mio sito');
 
 //Récupérer une traduction
-$text = App::getTranslate( 'BONJOUR' ); // ce qui donnera "Bonjour", car dans App::setTranslateLang on à défini 'fr'
+$text = App::getTranslate( 'BONJOUR' ); // ce qui donnera "Benvenuti nel mio sito", car dans App::setTranslateLang() on à défini 'ita'
 ```
 
 Dans une template:
