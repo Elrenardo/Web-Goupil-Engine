@@ -1,0 +1,47 @@
+{
+    "name"        : "FoxCMS",
+    "description" : "CMS de création de site web",
+    "version"     : "0.1",
+    "license"     : "MIT",
+    "bugs"        : "https://github.com/Elrenardo/FoxCMS/issues",
+
+    "authors":[
+        {
+            "name" : "Teysseire Guillaume",
+            "email": "teysseire@studiogoupil.fr",
+            "role": "Developer"
+        }
+    ],
+
+    "config":{
+        "github-oauth":{
+            "github.com": "27fc184775dc026e1fdbca17a6956058bd284335"
+        }
+    },
+    
+    "repositories":[
+        {
+            "type"   : "package",
+            "package": {
+                "name"   : "codemirror/CodeMirror",
+                "version": "dev-master",
+                "source" :{
+                    "url"      : "https://github.com/codemirror/CodeMirror.git",
+                    "type"     : "git",
+                    "reference": "origin/master"
+                }
+            }
+        }
+    ],
+
+    "require":{
+        "php"                         : ">=5.6",
+        "twig/twig"                   : "~1.0",
+        "altorouter/altorouter"       : "1.1.0",
+        "usmanhalalit/pixie"          : "2.*@dev"
+    },
+
+    "autoload":{
+       "psr-4":{ "WGE\\":"vendor/wge/" }
+    }
+}
