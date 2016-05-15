@@ -2,7 +2,7 @@
 
 Le Web Goupil Engine est un framework écrit en PHP, et conçu pour permettre la création de site internet ou web application moderne facilement. Il a été conçu dans l'optique de faciliter l'apprentissage et utilisation du Framework par des programmeurs de tout niveaux !
 
-Ce Framework intègre par default plusieurs fonctionnalisées, tel que la gestion de plusieurs site sur un seul hébergement ainsi que la création de serveur RESTful, le support multi-langue, tout ça couplé avec le moteur de Template TWIG ou affichage JSON pour les Web applications.
+Ce Framework intègre par default plusieurs fonctionnalisées, tel que la gestion de plusieurs site sur un seul hébergement ainsi que la création de serveur RESTful, le support multi-langage, tout ça couplé avec le moteur de Template TWIG ou affichage JSON pour les Web applications.
 
 Il prend aussi en charge tout un panel de fonctionnalités très simple pour manipuler les différentes interfaces du Framework ainsi que la création de route propre très simplement !
 
@@ -20,7 +20,7 @@ Il prend aussi en charge tout un panel de fonctionnalités très simple pour man
 * [Gestion des Services](#service)
 * [Sécurité GET, POST & COOKIE](#security)
 * [Base de données](#bdd)
-* [Support multi-language](#trad)
+* [Support multi-langage](#trad)
 
 
 <br/><br/><br/>
@@ -583,13 +583,14 @@ App::registerSave();
 
 Le gestionnaire de services permet de stocker une instance dans un contenaire pour pouvoir la récupérer n'importe ou.
 
-Par dfault vous pouvez demander les services suivants:
+Par défault vous pouvez demander les services suivants:
 - "kernel"
 - "router"
 - "render"
 - "config"
 - "plugins"
 - "REST"
+- "translate"
 
 Gestion des services:
 ```php
@@ -670,7 +671,7 @@ $ret= App::query('ma_table')->findAll('name', 'Sana');
 
 <br/><br/><br/>
 <a name="trad"></a>
-## Support multi-language
+## Support multi-langage
 
 Nous voici dans la dernières partie de la documentions du Framework. Nous allons voir le support multi-langage pour pouvoir proposer différentes traduction du vôtre ou vos sites internet.
 
