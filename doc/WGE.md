@@ -12,7 +12,7 @@ Il prend aussi en charge tout un panel de fonctionnalités très simple pour man
 * [Route et controller](#route)
 * [Gestion des erreurs HTTP](#error)
 * [Template](#template)
-* [Authorisation et Firewall](#firewall)
+* [Authorisation](#auth)
 * [Nommer une route](#name_route)
 * [Client & serveur REST](#rest)
 * [Gestion des Registres](#registre)
@@ -428,17 +428,17 @@ App::addFuncTpl('nom_de_la_fonction',function( ... ){
 
 
 <br/><br/><br/>
-<a name="firewall"></a>
-## Authorisation et Firewall
+<a name="auth"></a>
+## Authorisation
 
-Si vous voulez limiter l'accès à une route pour certaines personnes possédant les droits nécessaires, il vous faudra utiliser le __Firewall__
+Si vous voulez limiter l'accès à une route pour certaines personnes possédant les droits nécessaires, il vous faudra utiliser les __Authorisation__
 ```php
-//Ajout d'un firewall à une route 
-App::route('/secret')->firewall('VIP');
+//Ajout d'un authorisation à une route 
+App::route('/secret')->auth('VIP');
 ```
 Seuls les personnes "VIP" pourront accéder à la page "/sercret" 
 
-Ajouter une authorisation:
+Ajouter une authorisation pour accéder au route 'VIP':
 ```php
 App::auth('VIP');
 ```
@@ -446,7 +446,7 @@ App::auth('VIP');
 Tester une authorisation dans les Templates:
 ```html
 <!-- A le droit d'afficher cette page -->
-{% if isFirewall('VIP') %}
+{% if isAuth('VIP') %}
     <!-- HTML -->
 {% endif %}
 ```
@@ -508,9 +508,10 @@ class Joueur{
     //...
 };
 
-//Création su serveur REST
+//Création d'un serveur REST
 App::RESTserveur('nom_du_serveur_rest')->instance( new Joueur() );
 ```
+
 Si je veux appeler via une URL la method "name" de la class "Joueur", il suffira de taper dans une barre d'addresse:
 ```html
 www.monsite.fr/rest/nom_du_serveur_rest/name
@@ -537,6 +538,13 @@ Dans les templates:
 ```
 {{ RESTclient('/rest/nom_du_serveur_rest/name', tab ) }}
 ```
+
+Aujouter une Authorisation au serveur REST:
+```php
+//Création d'un serveur REST avec l'authorisation 'ADMIN'
+App::RESTserveur('nom_du_serveur_rest')->instance( new Joueur() )->auth('ADMIN');
+```
+
 
 <br/><br/><br/>
 <a name="registre"></a>
