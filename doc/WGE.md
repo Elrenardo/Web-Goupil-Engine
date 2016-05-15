@@ -15,7 +15,7 @@ Il prend aussi en charge tout un panel de fonctionnalités très simple pour man
 * [Template](#template)
 * [Authorisation](#auth)
 * [Nommer une route](#name_route)
-* [Client & serveur REST](#rest)
+* [Client & serveur RESTful](#rest)
 * [Gestion des Registres](#registre)
 * [Gestion des Services](#service)
 * [Sécurité GET, POST & COOKIE](#security)
@@ -498,7 +498,7 @@ Récupérer la route dans un template:
 
 <br/><br/><br/>
 <a name="rest"></a>
-## Client et Serveur REST
+## Client et Serveur RESTful
 
 La création d'un serveur REST est l'une des bases du 'Web Goupil Engine', elle permet d'utiliser des class directement dans le routage des routes, ce qui permet leurs utilisations sous forme d'API.
 
