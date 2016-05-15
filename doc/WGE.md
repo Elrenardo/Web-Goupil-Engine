@@ -2,7 +2,8 @@
 
 Le Web Goupil Engine est un framework écrit en PHP, et conçu pour permettre la création de site internet ou web application moderne facilement. Il a été conçu dans l'optique de faciliter l'apprentissage et utilisation du Framework par des programmeurs de tout niveaux !
 
-Ce Framework intègre par default plusieurs fonctionnalisées, tel que la gestion de plusieurs site sur un seul hébergement ainsi que la création de serveur RESTful, tout ça couplé avec le moteur de Template TWIG ou affichage JSON pour les Web applications.
+Ce Framework intègre par default plusieurs fonctionnalisées, tel que la gestion de plusieurs site sur un seul hébergement ainsi que la création de serveur RESTful, le support multi-langue, tout ça couplé avec le moteur de Template TWIG ou affichage JSON pour les Web applications.
+
 Il prend aussi en charge tout un panel de fonctionnalités très simple pour manipuler les différentes interfaces du Framework ainsi que la création de route propre très simplement !
 
 # Sommaire
@@ -19,6 +20,7 @@ Il prend aussi en charge tout un panel de fonctionnalités très simple pour man
 * [Gestion des Services](#service)
 * [Sécurité GET, POST & COOKIE](#security)
 * [Base de données](#bdd)
+* [Support multi-language](#trad)
 
 
 <br/><br/><br/>
@@ -663,4 +665,28 @@ $ret= App::query('ma_table,ma_table2')
 
 //Trouver tous les élements égales à
 $ret= App::query('ma_table')->findAll('name', 'Sana');
+```
+
+
+<br/><br/><br/>
+<a name="trad"></a>
+## Support multi-language
+
+Nous voici dans la dernières partie de la documentions du Framework. Nous allons voir le support multi-langage pour pouvoir proposer différentes traduction du vôtre ou vos sites internet.
+
+Le support multi-langage fonctionne sous le principe d'attribuer une clef de traduction et d'y attacher ca valeur traduite en plusieurs langues.
+```php
+//On défini dans qu'elle langue on veux les traductions:
+App::setTranslateLang( 'fr' );
+
+//Ajouter des traductions
+App::translate( 'BONJOUR' )->set('fr','Bonjour')->set('en','Hello')->set('ita','Ciao');
+
+//Récupérer une traduction
+$text = App::getTranslate( 'BONJOUR' ); // ce qui donnera "Bonjour", car dans App::setTranslateLang on à défini 'fr'
+```
+
+Dans une template:
+```html
+{{ translate('BONJOUR') }}
 ```
