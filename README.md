@@ -1,7 +1,7 @@
 # Web Goupil Engine: CMS & Framework
 
 ## CMS documentation:
-Prochainement....
+Prochainement.... ( Doc & source en développement, non inclu actuellement )
 
 ## Framework documentation:
 
