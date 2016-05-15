@@ -76,6 +76,11 @@ Nous verrons plus en détails par la suite le fonctionnement de cette exemple. J
 Cette class static et une interface d'utilisation entre vous et le fonctionnement de "Web Goupil Engine". Elle vous fournit tout ce dont vous avez besoin pour créer et configurer votre site ou web application rapidement et facilement et s'occupera du reste (comme l'initialisation et la configuration du kernel, des routes, services ...)
 
 
+Architecture de fonctionement de "Web Goupil Engine":
+
+![architecture](https://github.com/Elrenardo/Web-Goupil-Engine/blob/master/doc/img/wge_plan.png)
+
+
 
 <br/><br/><br/>
 <a name="plugins"></a>
@@ -592,10 +597,6 @@ App::addService( 'nom_de_mon_service', new myClass() );
 //Récupérer un service
 $service = App::getService( 'nom_de_mon_service' );
 ```
-
-Architecture de fonctionement de "Web Goupil Engine":
-
-![architecture](https://github.com/Elrenardo/Web-Goupil-Engine/blob/master/doc/img/wge_plan.png)
 
 
 <br/><br/><br/>
