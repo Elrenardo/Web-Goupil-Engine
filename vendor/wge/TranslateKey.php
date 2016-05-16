@@ -10,8 +10,8 @@ namespace WGE;
 
 class TranslateKey
 {
-	private $key = '';
-	private $tab = [];
+	private $key   = '';
+	private $value = '';
 
 
 
@@ -34,7 +34,10 @@ class TranslateKey
 	*/
 	public function set( $lang, $trad )
 	{
-		$this->tab[ $lang ] = $trad;
+		//Ajout de la langue uniquement si c'est la bonne
+		if( Translate::getLang() == $lang )
+			$this->value = $trad;
+
 		return $this;
 	}
 
@@ -42,14 +45,11 @@ class TranslateKey
 
 	/**
 	* @briefrenvoi la valeur de la langue
-	* @param $lan:string langue a utilisé
-	* @return string ( renvoi '' si rien )
+	* @return string
 	*/
-	public function get( $lang )
+	public function get( )
 	{
-		if( isset($this->tab[ $lang ]))
-			return $this->tab[ $lang ];
-		return '';
+		return $this->value;
 	}
 
 
@@ -58,9 +58,5 @@ class TranslateKey
 	public function getKey()
 	{
 		return $this->key;
-	}
-	public function getTrad()
-	{
-		return $this->trad;
 	}
 };

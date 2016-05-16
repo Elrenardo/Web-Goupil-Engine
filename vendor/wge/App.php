@@ -65,12 +65,35 @@ class App
 			//Création du service Translate
 			self::$service->add( 'translate', new Translate() );
 
+			//Détecte racine App::setBasePath()
+			self::autoDetectSetBasePath();
+
 			//construction du serveur REST
 			self::RESTbuild();
 
 			//Ajout de fonctionalité au templating
 			self::TemplateBuild();
+
+			//translate build
+			self::TranslateBuild();
 		}
+	}
+
+	/**
+	* @brief  réglage automatique du Base Path pour le router
+	*/
+	private static function autoDetectSetBasePath()
+	{
+		if( $_SERVER['PHP_SELF'] == '/index.php')
+			return;
+
+		$buffer = explode('/',$_SERVER['PHP_SELF']);
+		array_pop( $buffer );//enlever le "index.php"
+		$buffer = implode('/',$buffer );
+		$buffer = substr($buffer,1);//enlever le premier "/"
+		$buffer = $buffer.'/';
+		//set base path
+		App::setBasePath( $buffer );
 	}
 
 	/**
@@ -402,6 +425,21 @@ class App
 
 
 	/**
+	* @brief ajoute des fonctionalité pour la traduction
+	*/
+	private static function TranslateBuild()
+	{
+		App::route('/translate/[a:lang]')->controller(function($route, $params)
+		{
+			\WGE\App::setTranslateLang( $params['lang'] );
+			$translate = \WGE\App::getService('translate');
+			return $translate->getAll();
+		})
+		->name('translate');
+	}
+
+
+	/**
 	* @brief connection BDD
 	* @param $addresse de l'host a contacter default:localhost
 	* @return string, résultat du serveur
@@ -505,7 +543,12 @@ class App
 	public static function setTranslateLang( $lang )
 	{
 		self::start();
-		self::$service->get('translate')->setLang( $lang );
+		Translate::setLang( $lang );
+	}
+	public static function getTranslateLang()
+	{
+		self::start();
+		return Translate::getLang();
 	}
 
 

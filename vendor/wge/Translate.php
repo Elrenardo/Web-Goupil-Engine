@@ -9,8 +9,8 @@
 namespace WGE;
 class Translate
 {
-	private $lang    = 'fr';
-	private $key     = [];
+	private static $lang    = 'fr';
+	private $key            = [];
 
 
 	/**
@@ -18,10 +18,19 @@ class Translate
 	* @param $lang:string id lang
 	* @return this
 	*/
-	public function setLang( $lang )
+	public static function setLang( $lang )
 	{
-		$this->lang = $this;
-		return $this;
+		self::$lang = $lang;
+	}
+
+	/**
+	* @brief renvoi la langue par default
+	* @param $lang:string id lang
+	* @return this
+	*/
+	public static function getLang()
+	{
+		return self::$lang;
 	}
 
 
@@ -31,11 +40,11 @@ class Translate
 	* @param $key:TranslateKey 
 	* @return this
 	*/
-	public function add( TranslateKey &$key )
+	public function add( TranslateKey &$obj )
 	{
-		$k = $key->getKey();
-		$this->key[ $k ] = $key;
-		return this;
+		$k = $obj->getKey();
+		$this->key[ $k ] = $obj;
+		return $this;
 	}
 
 
@@ -55,5 +64,20 @@ class Translate
 			return $ret;
 		}
 		return $name;
+	}
+
+
+	/**
+	* @brief renvoi un tableau avec les clef et traduction demandé
+	* @return array
+	*/
+	public function getAll()
+	{
+		$buffer = [];
+		foreach ($this->key as $key => $value)
+		{
+			$buffer[ $key ] = $value->get();
+		}
+		return $buffer;
 	}
 };
