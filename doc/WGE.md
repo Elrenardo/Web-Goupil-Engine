@@ -130,12 +130,6 @@ Dans l'exemple ci-dessus nous pouvons que, il y a trois site "studiogoupil", "mo
 
 Le contenu d'un "home" ou "plugin" ne sera chargé que si un "Host" vient à l'appeler !
 
-Il ce peux que vous utilisez le framework en dehors de la racine de vôtre hebergement (ou serveur local) dans ce cas, il faudra préciser au Framework le dossier courent d'utiliation:
-```php
-App::setBasePath('monDossier1/mondossier2/');
-```
-
-
 <br/><br/><br/>
 <a name="hosts"></a>
 ## Gestion des Hosts
@@ -678,6 +672,7 @@ Nous voici dans la dernières partie de la documentions du Framework. Nous allon
 Le support multi-langage fonctionne sous le principe d'attribuer une clef de traduction et d'y attacher ca valeur traduite en plusieurs langues.
 ```php
 //On défini dans qu'elle langue on veux les traductions:
+//Cette methode est prioritaire sur les autres car elle va définir qu'elle sont les traductions à utiliser !
 App::setTranslateLang( 'ita' );
 
 //Ajouter des traductions
@@ -691,3 +686,19 @@ Dans une template:
 ```html
 {{ translate('BONJOUR') }}
 ```
+
+Pour récupérer des traductions pour les web-applications au format JSON, il vous faudra contacter cette route:
+```html
+<!-- Définission de la route -->
+/translate/[a:lang]
+
+<!-- Je veux récupérer les traductions "fr"-->
+www.monSite.fr/translate/fr
+```
+
+<br/><br/>
+---------
+Web-Goupil-Engine : Framework
+
+Par:<br/>
+Guillaume Teysseire.
