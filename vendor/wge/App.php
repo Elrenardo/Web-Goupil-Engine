@@ -371,7 +371,7 @@ class App
 
 			//Exécution de la method de la class si elle existe
 			$buffer = $rest[ $ctrl ];
-			return $buffer->exec( $method, $data );
+			return $buffer->exec( $route, $data );
 		})->name('REST');
 	}
 
