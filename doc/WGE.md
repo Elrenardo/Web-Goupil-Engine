@@ -492,10 +492,17 @@ Récupérer la route dans un template:
 
 <br/><br/><br/>
 <a name="rest"></a>
-## Client et Serveur RESTful
+## Client et Serveur RESTful: Representational State Transfer
 
-La création d'un serveur REST est l'une des bases du 'Web Goupil Engine', elle permet d'utiliser des class directement dans le routage des routes, ce qui permet leurs utilisations sous forme d'API.
+une architecture de type REST (« Representational State Transfer ») permet de rendre toutes informations accessible via une URL. Celles-ci sont alors appelées ressources et sont managées par le biais d’un ensemble de méthodes HTTP. L'utilisation de serveur REST est l'une des bases de l'utilisation de 'Web Goupil Engine'.
 
+Les principales méthodes HTTP utilisées sont les suivantes :
+* GET    ? Récupérer une ressource (ne modifie pas la ressource).
+* POST   ? Modifier une ressource.
+* PUT    ? Créer une ressource.
+* DELETE ? Supprimer une ressource.
+
+Mais vous pouvez aussi créer des methodes personnalisé pour répondre parfétement a vôtre besoin. Par exemple:
 ```php
 class Joueur{
     //Renvoi le nom du joueur
@@ -540,10 +547,39 @@ Dans les templates:
 {{ RESTclient('/rest/nom_du_serveur_rest/name', tab ) }}
 ```
 
+<b style="color:red;">/!\ Attention à l'utilisation du système REST et les données qui peuvent être manipulé! </b><br/>
+Il est possible que des applications tierces ou des personnes mal intentionné détourne vos requêtes REST pour modifier votre site internet à leur guise.
+
+Pour empêcher cela, il est possible comme pour les routes de bloquer l'utilisation d'un serveur REST que pour les personnes qui possèdes une certaine autorisation.
+
+
 Aujouter une Authorisation au serveur REST:
 ```php
 //Création d'un serveur REST avec l'authorisation 'ADMIN'
 App::RESTserveur('nom_du_serveur_rest')->instance( new Joueur() )->auth('ADMIN');
+```
+
+Dans le cas ou vôtre serveur REST dois posséder plusieurs type d'autorisation, il vous faudra les gérer dans chaque méthode de la class qui vous instancier:
+```php
+class Pages{
+    //Renvoi le contenu de la page
+    public function get( $route, $params ){
+        return '...';
+    }
+    //Supprimer une page
+    public function delete( $route, $params )
+    {
+        if( !App::isAuth('DELETE'))//si l'utilisateur ne posséde pas l'autorisation "delete"
+            return false;
+            
+        //Il posséde les droits !
+        //Je peux supprimer la page
+        ...
+    }
+};
+
+//Création serveur REST
+App::RESTserveur('pages')->instance( new Pages() );
 ```
 
 
