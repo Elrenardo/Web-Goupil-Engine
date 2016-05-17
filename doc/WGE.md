@@ -502,15 +502,18 @@ Les principales méthodes HTTP utilisées sont les suivantes :
 * PUT    ? Créer une ressource.
 * DELETE ? Supprimer une ressource.
 
-Mais vous pouvez aussi créer des methodes personnalisé pour répondre parfétement a vôtre besoin. Par exemple:
+Mais vous pouvez aussi créer des methodes personnalisé pour répondre parfétement a vôtre besoin.<br/>
+Pour récupérer les paraméttres de la route, il sera disponible dans __$params['data']__ et la route utilisé dans __$route__.<br/>
+
+Par exemple:
 ```php
 class Joueur{
     //Renvoi le nom du joueur
-    public function name(){
+    public function name( $route, $params ){
         return 'Jean-Paul';
     }
     //Renvoi les stats du joueurs
-    public function stats(){
+    public function stats( $route, $params ){
         return array(...);
     }
     //...
