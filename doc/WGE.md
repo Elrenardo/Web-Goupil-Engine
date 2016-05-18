@@ -31,6 +31,7 @@ Une fois les sources récupéré et copié à la racine du répértoire de votre
 
 ![arborescence](https://github.com/Elrenardo/Web-Goupil-Engine/blob/master/doc/img/arbo_0.png)
 
+
 L'arborescence du projet est composée de 3 dossiers et 3 fichiers:
 
 - Un dossier "__doc__", qui contient la documentation du "Web Goupil Engine".
@@ -520,7 +521,7 @@ class Joueur{
 };
 
 //Création d'un serveur REST
-App::RESTserveur('nom_du_serveur_rest')->instance( new Joueur() );
+App::RESTserver('nom_du_serveur_rest')->instance( new Joueur() );
 ```
 
 Si je veux appeler via une URL la method "name" de la class "Joueur", il suffira de taper dans une barre d'addresse:
@@ -535,19 +536,19 @@ Comme toutes les routes, si le return est un array, alors le message sera tradui
 Appeler un client REST en PHP:
 ```php
 //Appel du serveur REST
-App::RESTclient('/rest/nom_du_serveur_rest/stats' );
+App::RESTclient('rest/nom_du_serveur_rest/stats' );
 
 //Appel du serveur REST et envoi d'informations au format POST
-$texte = App::RESTclient('/rest/nom_du_serveur_rest/name', array(...));
+$texte = App::RESTclient('rest/nom_du_serveur_rest/name', array(...));
 
 //Appel du serveur REST et retour du résultat sous forme d'array
-$tab = App::RESTArrayClient( '/rest/nom_du_serveur_rest/name' );
-$tab = App::RESTArrayClient( '/rest/nom_du_serveur_rest/name', array(...));//POST
+$tab = App::RESTArrayClient( 'rest/nom_du_serveur_rest/name' );
+$tab = App::RESTArrayClient( 'rest/nom_du_serveur_rest/name', array(...));//POST
 ```
 
 Dans les templates:
 ```
-{{ RESTclient('/rest/nom_du_serveur_rest/name', tab ) }}
+{{ RESTclient('rest/nom_du_serveur_rest/name', tab ) }}
 ```
 
 <b style="color:red;">/!\ Attention à l'utilisation du système REST et les données qui peuvent être manipulé! </b><br/>
