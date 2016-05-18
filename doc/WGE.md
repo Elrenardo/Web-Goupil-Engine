@@ -504,17 +504,17 @@ Les principales méthodes HTTP utilisées sont les suivantes :
 * DELETE ? Supprimer une ressource.
 
 Mais vous pouvez aussi créer des methodes personnalisé pour répondre parfétement a vôtre besoin.<br/>
-Pour récupérer les paraméttres de la route, il sera disponible dans __$params['data']__ et la route utilisé dans __$route__.<br/>
+Pour récupérer les paraméttres de la route, il sera disponible dans __$params__ et la route utilisé dans __$route__.<br/>
 
 Par exemple:
 ```php
 class Joueur{
     //Renvoi le nom du joueur
-    public function name( $route, $params ){
+    public function name( $route, $param ){
         return 'Jean-Paul';
     }
     //Renvoi les stats du joueurs
-    public function stats( $route, $params ){
+    public function stats( $route, $param ){
         return array(...);
     }
     //...
@@ -567,11 +567,11 @@ Dans le cas ou vôtre serveur REST dois posséder plusieurs type d'autorisation,
 ```php
 class Pages{
     //Renvoi le contenu de la page
-    public function get( $route, $params ){
+    public function get( $route, $param ){
         return '...';
     }
     //Supprimer une page
-    public function delete( $route, $params )
+    public function delete( $route, $param )
     {
         if( !App::isAuth('DELETE'))//si l'utilisateur ne posséde pas l'autorisation "delete"
             return false;
