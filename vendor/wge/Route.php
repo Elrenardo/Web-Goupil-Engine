@@ -16,6 +16,7 @@ class Route
 	private $tpl_path = '';
 	private $method   = 'GET|POST';
 	private $redirect = NULL;
+	private $data     = NULL;
 
 	private static $name = array();
 	private static $base_path = '';
@@ -92,6 +93,42 @@ class Route
 
 
 	/**
+	* @brief définir un home repertory
+	* @param $name:string
+	* @return this
+	*/
+	public function templateRepertory( $name )
+	{
+		//Template
+		$this->template( $name );
+
+		$tpl = App::getService('render');
+		$bd = dirname( $tpl->getTemplate( $name ) );
+		$bd = end( explode('/',$bd)).'/';
+
+		//Route d'auto routage
+		App::route('/[**:file]')
+		->setData( $bd )
+		->controller(function( $route, $param )
+		{
+			$bd = $route->getData();
+			$path         = App::path($bd.$param['file']);
+			$path_complet = App::getRealPath( $path );
+			$url          = App::url( $path );
+
+			//création des headers du document a afficher
+			$ret =  get_headers( $url );
+			foreach ($ret as $key => $value){
+				header($value);
+			}
+			return file_get_contents( $path_complet );
+		});
+
+		return $this;
+	}
+
+
+	/**
 	* @brief éxécute un controler
 	* @param $params:string
 	* @return this
@@ -147,7 +184,8 @@ class Route
 			'tpl'      => $this->tpl,
 			'tpl_path' => $this->tpl_path,
 			'redirect' => $this->redirect,
-			'method'   => $this->method
+			'method'   => $this->method,
+			'data'     => $this->data
 		);
 		return $ret;
 	}
@@ -165,6 +203,19 @@ class Route
 		
 		return $this;
 	}
+
+
+	/**
+	* @brief Enregistre des données sur la route pour une utilisation ultérieur
+	* @param $data: array|text|class ...
+	*/
+	public function setData( $data )
+	{
+		$this->data = $data;
+		return $this;
+	}
+
+
 
 	/**
 	* @brief retourne la config de la route
@@ -227,5 +278,9 @@ class Route
 	public function getMethod()
 	{
 		return $this->method;
+	}
+	public function &getData()
+	{
+		return $this->data;
 	}
 };

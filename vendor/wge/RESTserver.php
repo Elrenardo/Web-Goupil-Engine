@@ -43,7 +43,7 @@ class RESTserver
 	* @param $param:array
 	* @return résultat de la fonction
 	*/
-	public function exec( $method, $param )
+	public function exec( $method, $route, $param )
 	{
 		//vérifier l'auth
 		if( !is_null($this->auth))
@@ -55,7 +55,7 @@ class RESTserver
 		//éxécuter le controller
 		if( !is_null($this->ctrl))
 		if( method_exists($this->ctrl, $method ))
-			return $this->ctrl->{ $method }( $param );
+			return $this->ctrl->{ $method }( $route, $param );
 		return '';
 	}
 };
