@@ -536,19 +536,19 @@ Comme toutes les routes, si le return est un array, alors le message sera tradui
 Appeler un client REST en PHP:
 ```php
 //Appel du serveur REST
-App::RESTclient('rest/nom_du_serveur_rest/stats' );
+App::RESTclient('nom_du_serveur_rest/stats' );
 
 //Appel du serveur REST et envoi d'informations au format POST
-$texte = App::RESTclient('rest/nom_du_serveur_rest/name', array(...));
+$texte = App::RESTclient('nom_du_serveur_rest/method', array(...));
 
 //Appel du serveur REST et retour du résultat sous forme d'array
-$tab = App::RESTArrayClient( 'rest/nom_du_serveur_rest/name' );
-$tab = App::RESTArrayClient( 'rest/nom_du_serveur_rest/name', array(...));//POST
+$tab = App::RESTArrayClient( 'nom_du_serveur_rest/method' );
+$tab = App::RESTArrayClient( 'nom_du_serveur_rest/method', array(...));//POST
 ```
 
 Dans les templates:
 ```
-{{ RESTclient('rest/nom_du_serveur_rest/name', tab ) }}
+{{ RESTclient('nom_du_serveur_rest/method', tab ) }}
 ```
 
 <b style="color:red;">/!\ Attention à l'utilisation du système REST et les données qui peuvent être manipulé! </b><br/>
