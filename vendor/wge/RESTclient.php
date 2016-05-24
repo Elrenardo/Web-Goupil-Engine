@@ -40,8 +40,8 @@ class RESTclient
 	*/
 	public function get()
 	{
-		$url        = 'http://'.$_SERVER['HTTP_HOST'].'/'.Route::getBasePath().$this->addr;
-		$url_actuel = 'http://'.$_SERVER['HTTP_HOST'].'/'.Route::getBasePath();
+		$url        = 'http://'.$_SERVER['HTTP_HOST'].'/'.App::IDREST.'/'.Route::getBasePath().$this->addr;
+		$url_actuel = 'http://'.$_SERVER['HTTP_HOST'].'/'.App::IDREST.'/'.Route::getBasePath();
 
 		if( $url_actuel == $url )
 			return die('Error client REST: http loop request ! ->'.$url );
