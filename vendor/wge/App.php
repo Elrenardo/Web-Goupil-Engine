@@ -45,7 +45,7 @@ class App
 			self::$service = new Container();
 
 			//Création service du kernel
-			self::$service->add( 'kernel', kernel::getInstance() );
+			self::$service->add( 'kernel', Kernel::getInstance() );
 
 			//Création du router et configuration
 			self::$service->add('router', new \AltoRouter() );

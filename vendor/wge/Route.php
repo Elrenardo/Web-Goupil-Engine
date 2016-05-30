@@ -104,7 +104,9 @@ class Route
 
 		$tpl = App::getService('render');
 		$bd = dirname( $tpl->getTemplate( $name ) );
-		$bd = end( explode('/',$bd)).'/';
+		//$explode = explode('/',$bd);
+		//$bd = end( $explode ).'/';
+		$bd = substr(strrchr($bd, '/'), 1).'/';
 
 		//Route d'auto routage
 		App::route('/[**:file]')
@@ -115,6 +117,9 @@ class Route
 			$path         = App::path($bd.$param['file']);
 			$path_complet = App::getRealPath( $path );
 			$url          = App::url( $path );
+
+			if( !file_exists( $path_complet ))
+				return '404';
 
 			//création des headers du document a afficher
 			$ret =  get_headers( $url );
