@@ -1,8 +1,8 @@
 {
     "name"        : "FoxCMS",
     "description" : "CMS de création de site web",
-    "version"     : "0.1",
-    "license"     : "MIT",
+    "version"     : "1",
+    "license"     : "GPL v3",
     "bugs"        : "https://github.com/Elrenardo/FoxCMS/issues",
 
     "authors":[
