@@ -135,7 +135,7 @@ Le contenu d'un "home" ou "plugin" ne sera chargé que si un "Host" vient à l'a
 <a name="hosts"></a>
 ## Gestion des Hosts
 
-La gestion des "hosts" permet l'utilisation des fonctionnalisées __multi-site__ ou d'attribuer ou non des plugins sur crtains site ou web application.
+La gestion des "hosts" permet l'utilisation des fonctionnalisées __multi-site__ ou d'attribuer ou non des plugins sur certains site ou web application.
 
 Revenons donc à notre premier exemple et plus particuliérement à la ligne d l'Host:
 ```php
@@ -194,6 +194,7 @@ Nous avons vu que chaque plugin ou home appelle via la méthode "__file( string 
 ```php
 App::home('monSite')->path('homes/monSite/')->file('site.php');
 ```
+Il est possible de spécifier plusieurs fichier en utilisent plusieurs fois la méthode "file()".
 
 Voici donc le contenu minimal de ce fichier 'site.php' c trouvant dans le répertoire /homes/monSite/
 ```php
@@ -204,6 +205,12 @@ use WGE\App;
 C’est tout !
 
 A cette étape là, si vous allez à la racine de votre serveur vous voyez normalement une page blanche. C'est normal, notre Framework pour le moment trie uniquement les hosts.
+
+La suite du tutorial ce fait dans le fichier "site.php" mais si dans ce plugin vous voulez organiser votre site a travers plusieurs fichier PHP ( ce qui est conseiller ) vous pouvez inclure d'autre fichier PHP de cete maniére!
+```php
+//j'inclu le fichier "file" qui ce trouve dans le répertoire "fichier" qui ce trouve lui même dans un plugin ou home.
+include App::path('fichier/file.php');
+```
 
 Nous allons donc lui rajouter une route !
 Reprenons notre fichier 'site.php'
