@@ -1,7 +1,4 @@
-# Web Goupil Engine: CMS & Framework
-
-## CMS documentation:
-Prochainement.... ( Doc & source en développement, non inclu actuellement )
+# Web Goupil Engine: Framework
 
 ## Framework documentation:
 
@@ -14,3 +11,8 @@ Il prend aussi en charge tout un panel de fonctionnalités très simple pour man
 
 [Web Goupil Engine: Framework](https://github.com/Elrenardo/Web-Goupil-Engine/blob/master/doc/WGE.md)
 
+## Dépendence:
+[ Composer ](https://getcomposer.org/)<br/>
+[ Twig ](http://twig.sensiolabs.org/)<br/>
+[ AltoRouter ](http://altorouter.com/)<br/>
+[ Pixie Query Builder ](https://github.com/usmanhalalit/pixie)<br/>
