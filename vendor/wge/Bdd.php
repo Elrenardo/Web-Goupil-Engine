@@ -21,6 +21,7 @@ class Bdd
 		$this->config['username'] = 'root';
 		$this->config['password'] = '';
 		$this->config['database'] = '';
+		$this->config['charset']  = 'utf8';
 	}
 
 
@@ -142,6 +143,42 @@ class Bdd
 		$this->config['prefix'] = $prefix;
 		return $this;
 	}
+
+	/**
+	* @brief défini le schéma a utiliser pour du PostreSQL
+	* @param $name:string
+	* @return this
+	*/
+	public function schema( $name )
+	{
+		$this->config['schema'] = $name;
+		return $this;
+	}
+
+
+	/**
+	* @brief Défini un port a utiliser
+	* @param $port:number
+	* @return this
+	*/
+	public function port( $port )
+	{
+		$this->config['port'] = $port;
+		return $this;
+	}
+
+
+	/**
+	* @brief Défini un encodage
+	* @param $charset:string
+	* @return this
+	*/
+	public function charset( $charset )
+	{
+		$this->config['charset'] = $charset;
+		return $this;
+	}
+
 
 
 	/**
