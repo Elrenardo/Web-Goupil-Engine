@@ -676,6 +676,10 @@ App::bdd('localhost')
 ->password('')
 ->database('mybase')
 ->connexion();
+
+//Autre methode:
+->port( 2365 )
+->charset('utf8')//valeur par default
 ```
 
 Connexion SqlLite:
@@ -687,7 +691,7 @@ Connexion SqlLite:
 Connexion PostgreSQL
 ```php
 //Rajouter avant connexion()
-->driver('pgsql')
+->driver('pgsql')->schema('public')
 ```
 
 Exemple de request effectuable grâce au Query Builder Pixie:
