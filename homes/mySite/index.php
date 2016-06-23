@@ -1,8 +1,10 @@
 <?php
 use WGE\App;
 
-//Template
-App::template('index')->path('tpl/index.html');
+//Template principal du site
+App::template('master_layout')->path('web/master_layout.html');
 
-//Ajout d'une route
-App::route('/')->template('index');
+
+//Ajout de la route page d'accueil
+App::template('tpl_home')->path('web/home.html');
+App::route('/')->template('tpl_home')->name('home');

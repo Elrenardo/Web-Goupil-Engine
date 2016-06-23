@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all" />
+    <meta http-equiv="X-Frame-Options" content="deny">
+
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="{% block desc %}{% endblock%}">
+    <meta name="author" content="{% block author %}{% endblock%}">
+    <link rel="icon" href="{% block favicon %}{% endblock%}">
+
+
+    <title>{% block title %}Demo Web-Goupil-Engine{% endblock%}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{path('web/css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{path('web/css/narrow-jumbotron.css')}}" rel="stylesheet">
+
+    {% block css %}{% endblock %}
+  </head>
+
+  <body>
+    <div class="container">
+      {% block body %}
+        <p>No Body for master layer !</p>
+      {% endblock %}
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{{path('web/js/ie10-viewport-bug-workaround.js')}}"></script>
+
+    {% block js %}{% endblock %}
+  </body>
+</html>

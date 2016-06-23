@@ -12,12 +12,6 @@
             "role": "Developer"
         }
     ],
-
-    "config":{
-        "github-oauth":{
-            "github.com": "27fc184775dc026e1fdbca17a6956058bd284335"
-        }
-    },
     
     "repositories":[
         {
