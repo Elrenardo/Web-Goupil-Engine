@@ -757,7 +757,19 @@ Listes des types disponibles:
 - "array"
 - "object"
 - "NULL" (depuis PHP 4.2.0)
+- 
 
+Vous pouvez aussi ajouter une fonction pour effectuer des traitements personaliser sur les colonnes:
+```php
+//Exemple:
+$t->addColumn('name')->type('string')->setDefault('Anonymus')->func(function( $val )
+{
+    //traitement spéciphique de $val
+    //...
+    //Renvoyer la valeur
+    return $val;
+});
+```
 
 
 <br/><br/><br/>
