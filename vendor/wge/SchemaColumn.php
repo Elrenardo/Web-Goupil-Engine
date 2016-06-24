@@ -19,7 +19,14 @@ class SchemaColumn
 	* @brief type de la colonm
 	* @param string
 	*/
-	private $type    = 'text'; 
+	private $type    = 'text';
+
+
+	/**
+	* @brief défini une fonction de conversion
+	* @param string
+	*/
+	private $func    = NULL;
 
 
 	/**
@@ -51,6 +58,19 @@ class SchemaColumn
 	}
 
 
+
+	/**
+	* @brief définir une fonction de conversion pour le type
+	* @param $func:function
+	* @return this
+	*/
+	public function type( $func )
+	{
+		$this->func = $func;
+		return $this;
+	}
+
+
 	/**
 	* @brief vérifie si l'entrer correspond a la table sinon renvoi la valeur par default
 	* @param $type_input:??
@@ -68,6 +88,10 @@ class SchemaColumn
 		if( $type == $this->type )
 			return $type_input;
 
+		//si une fonction de conversion est attaché
+		if( $this->func != NULL )
+			return $this->func( $type_input );
+
 		//sinon convertion du type
 		return settype( $type_input, $this->type);
 	}
@@ -75,7 +99,7 @@ class SchemaColumn
 
 
 
-
+	//Ascenseur get ...
 	public function getType()
 	{
 		return $this->type;
@@ -84,6 +108,10 @@ class SchemaColumn
 	public function getDefault()
 	{
 		return $this->default;
+	}
+	public function getFunc()
+	{
+		return $this->func;
 	}
 
 };
