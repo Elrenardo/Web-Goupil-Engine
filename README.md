@@ -16,7 +16,7 @@ Il prend aussi en charge tout un panel de fonctionnalités très simple pour man
 ( prochainement ... )
 
 
-##Exemple et bonne proatique:
+##Exemple et bonne pratique:
 ( prochainement ... )
 
 ## Dépendence:
