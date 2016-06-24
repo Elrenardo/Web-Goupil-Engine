@@ -11,6 +11,14 @@ Il prend aussi en charge tout un panel de fonctionnalités très simple pour man
 
 [Web Goupil Engine: Framework](https://github.com/Elrenardo/Web-Goupil-Engine/blob/master/doc/WGE.md)
 
+
+##Templating TWIG tuto:
+( prochainement ... )
+
+
+##Exemple et bonne proatique:
+( prochainement ... )
+
 ## Dépendence:
 [ Composer ](https://getcomposer.org/)<br/>
 [ Twig ](http://twig.sensiolabs.org/)<br/>
