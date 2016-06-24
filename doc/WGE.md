@@ -757,7 +757,6 @@ Listes des types disponibles:
 - "array"
 - "object"
 - "NULL" (depuis PHP 4.2.0)
-- 
 
 Vous pouvez aussi ajouter une fonction pour effectuer des traitements personaliser sur les colonnes:
 ```php
