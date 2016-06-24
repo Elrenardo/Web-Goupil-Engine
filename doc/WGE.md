@@ -20,6 +20,7 @@ Il prend aussi en charge tout un panel de fonctionnalités très simple pour man
 * [Gestion des Services](#service)
 * [Sécurité GET, POST & COOKIE](#security)
 * [Base de données](#bdd)
+* [Schema](#schema)
 * [Support multi-langage](#trad)
 
 
@@ -712,6 +713,51 @@ $ret= App::query('ma_table,ma_table2')
 //Trouver tous les élements égales à
 $ret= App::query('ma_table')->findAll('name', 'Sana');
 ```
+
+
+<br/><br/><br/>
+<a name="schema"></a>
+## Schema
+
+Lors de la manipulation d'une Base de données ou de tableau il arrive couramment que des champs ou valeur ne sois pas formater correctement ou n'existe tout simplement pas car les champs NULL disparaisse !
+
+Ainsi a était créer le Pattern design « Schema » pour formater un array a un format donner:
+```php
+//Créer un Schema via le service des schema:
+$my_schema = App::Schema('users');//création d'un schema nouveau users
+
+//création d'une colonne numérique
+$t->addColumn('id')->type('integer')->setDefault(0);
+//Création d'une colonne text
+$t->addColumn('name')->type('string')->setDefault('Anonymus');
+//Création d'un boolean
+$t->addColumn('etat')->type('boolean')->setDefault( false );
+
+//Conversion tableau vers schema
+$tab = [];
+$tab['id'] = 5;
+tab['etat'] = true;
+
+$tab = $t->convert( $tab );
+App::debug( $tab );
+//id : 5
+//etat : false
+//name : Anonymus
+
+//Récupérer un schema via le service de schema:
+$t = App::getSchema('users');
+//Optenir les colonnes et type d'un schema
+App::debug( $t->getColumn() );
+```
+Listes des types disponibles:
+- "boolean" (ou, depuis PHP 4.2.0, "bool")
+- "integer" (ou, depuis PHP 4.2.0, "int")
+- "float" (uniquement depuis PHP 4.2.0. Pour les anciennes versions, utilisez l'alternative "double")
+- "string"
+- "array"
+- "object"
+- "NULL" (depuis PHP 4.2.0)
+
 
 
 <br/><br/><br/>
