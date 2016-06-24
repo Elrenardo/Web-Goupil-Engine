@@ -32,8 +32,12 @@ class Bdd
 	*/
 	public static function query( $table )
 	{
+		if( !class_exists('\QB'))
+			die('BDD not initialised !');
+
 		return \QB::table( $table );
 	}
+
 
 	/**
 	* @brief création table
@@ -53,27 +57,7 @@ class Bdd
 			return \QB::query( $req );
 		die('BDD not initialised !');
 	}
-
-	/**
-	* @brief vérifie si le tableau d'entrer correspond au demande
-	* @param $tab tableau d'entrée comme $_POST
-	* @param $array_verif array() de vérification 
-	* @param return false si il manque un champ ou un en trop
-	*/
-    static public function verifTab( $tab, $array_verif )
-    {
-    	//si il n'est pas vide
-    	if( count($tab) < 1 )
-    		return false;
-    	//verifier le tableau
-    	foreach ($tab as $key => $value)
-    	{
-    		if( !in_array($key, $array_verif))
-    			return false;
-    	}
-    	return true;
-    }
-
+	
 
 	/**
 	* @brief driver a utilisé pour la connexion ex:mysql

@@ -69,6 +69,18 @@ class Schema
 	{
 		$tab = [];
 		foreach ($this->key as $key => $value)
+			array_push( $tab, $key );
+		return $tab;
+	}
+
+	/**
+	* @brief renvoi la liste des colonnes et type utilisé par le schema 
+	* @return array
+	*/
+	public function getFormat()
+	{
+		$tab = [];
+		foreach ($this->key as $key => $value)
 			$tab[ $key ] = $value->getDefault();
 		return $tab;
 	}
