@@ -26,7 +26,7 @@ class SchemaColumn
 	* @brief défini une fonction de conversion
 	* @param string
 	*/
-	private $func    = NULL;
+	private $filtrefunc    = array();
 
 
 	/**
@@ -64,9 +64,9 @@ class SchemaColumn
 	* @param $func:function
 	* @return this
 	*/
-	public function func( $func )
+	public function func( $f )
 	{
-		$this->func = $func;
+		$this->filtrefunc = $f;
 		return $this;
 	}
 
@@ -78,6 +78,14 @@ class SchemaColumn
 	*/
 	public function verif( &$type_input )
 	{
+		//si une fonction de conversion est attaché
+		if( is_callable($this->filtrefunc) )
+		{
+			$t = $this->filtrefunc;
+			$type_input =  $t( $type_input );
+		}
+
+		//vérifie la variable
 		$type = gettype( $type_input );
 
 		//si le type existe pas !
@@ -88,12 +96,9 @@ class SchemaColumn
 		if( $type == $this->type )
 			return $type_input;
 
-		//si une fonction de conversion est attaché
-		if( $this->func != NULL )
-			return $this->func( $type_input );
-
 		//sinon convertion du type
-		return settype( $type_input, $this->type);
+		settype( $type_input, $this->type);
+		return $type_input;
 	}
 
 
