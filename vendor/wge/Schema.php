@@ -69,7 +69,7 @@ class Schema
 	{
 		$tab = [];
 		foreach ($this->key as $key => $value)
-			$tab[ $key ] = $value->getValue();
+			$tab[ $key ] = $value->getDefault();
 		return $tab;
 	}
 

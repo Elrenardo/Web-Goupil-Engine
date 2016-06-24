@@ -27,7 +27,7 @@ class SchemaColumn
 	* @param $value:string
 	* @return this
 	*/
-	public function value( $value )
+	public function setDefault( $value )
 	{
 		if( gettype($value) == $this->type )
 			$this->default = $value;
@@ -58,9 +58,18 @@ class SchemaColumn
 	*/
 	public function verif( &$type_input )
 	{
-		if( gettype( $type_input ) == $this->type )
+		$type = gettype( $type_input );
+
+		//si le type existe pas !
+		if( $type == 'NULL' )
+			return $this->default;
+
+		//si le type est bon
+		if( $type == $this->type )
 			return $type_input;
-		return $this->default;
+
+		//sinon convertion du type
+		return settype( $type_input, $this->type);
 	}
 
 
@@ -72,7 +81,7 @@ class SchemaColumn
 		return $this->type;
 	}
 
-	public function getValue()
+	public function getDefault()
 	{
 		return $this->default;
 	}
