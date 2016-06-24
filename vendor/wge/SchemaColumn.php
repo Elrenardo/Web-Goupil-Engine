@@ -64,7 +64,7 @@ class SchemaColumn
 	* @param $func:function
 	* @return this
 	*/
-	public function type( $func )
+	public function func( $func )
 	{
 		$this->func = $func;
 		return $this;
