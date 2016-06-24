@@ -53,7 +53,7 @@ class App
 			//Création du service de render
 			self::$service->add('render', TemplateRender::getInstance() );
 
-			//Création serice config
+			//Création service config
 			self::$service->add( 'config', Register::getInstance() );
 
 			//Création service plugins
@@ -64,6 +64,9 @@ class App
 
 			//Création du service Translate
 			self::$service->add( 'translate', new Translate() );
+
+			//Création service schema
+			self::$service->add( 'schema', array() );
 
 			//Détecte racine App::setBasePath()
 			self::autoDetectSetBasePath();
@@ -549,6 +552,32 @@ class App
 	{
 		self::start();
 		return Translate::getLang();
+	}
+
+
+	/**
+	* @brief création d'un nouveau schema
+	* @param $name:string nom du schema
+	* @return Schema
+	*/
+	public static function schema( $name )
+	{
+		self::start();
+		$t = new Schema();
+		self::$service->get('schema')[ $name ] = $t;
+		return $t;
+
+	}
+
+	/**
+	* @brief return un schema
+	* @param $name:string nom du schema
+	* @return Schema
+	*/
+	public static function getSchema( $name )
+	{
+		self::start();
+		return self::$service->get('schema')[ $name ];
 	}
 
 
