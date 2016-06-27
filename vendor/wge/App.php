@@ -607,4 +607,16 @@ class App
 		var_dump( $buffer );
 		echo '</pre>';
 	}
+
+
+	public static function PHPdebugOn()
+	{
+		error_reporting(E_ALL);
+		ini_set('display_errors', 1);
+	}
+	public static function PHPdebugOff()
+	{
+		error_reporting(0);
+		ini_set('display_errors', 0);
+	}
 };
