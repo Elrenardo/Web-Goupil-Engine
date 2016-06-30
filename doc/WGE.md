@@ -209,8 +209,15 @@ A cette étape là, si vous allez à la racine de votre serveur vous voyez norma
 
 La suite du tutorial ce fait dans le fichier "site.php" mais si dans ce plugin vous voulez organiser votre site a travers plusieurs fichier PHP ( ce qui est conseiller ) vous pouvez inclure d'autre fichier PHP de cete maniére!
 ```php
-//j'inclu le fichier "file" qui ce trouve dans le répertoire "fichier" qui ce trouve lui même dans un plugin ou home.
+//j'inclu le fichier "file" qui ce trouve dans le répertoire "fichier"
+//qui ce trouve lui même dans un plugin ou home.
 include App::path('fichier/file.php');
+
+//inclure/acceder un fichier qui ce trouverais dans le répoértoire "home"
+include App::pathHome('fichier/file.php');
+
+//obtenir une URL d'un fichier
+echo App::url( 'url_du_fichier' );
 ```
 
 Nous allons donc lui rajouter une route !
@@ -672,15 +679,20 @@ https://github.com/usmanhalalit/pixie
 
 Se connecter à une Base de données Mysql ( par défault ):
 ```php
-App::bdd('localhost')
+//Créer une nouvelle connexion BDD
+App::bdd('nom_de_ma_bdd')
+->host('localhost')
 ->user('root')
 ->password('')
 ->database('mybase')
-->connexion();
 
 //Autre methode:
 ->port( 2365 )
 ->charset('utf8')//valeur par default
+->connexion()//pour connecter imédiatement la BDD
+
+//Attribuer une ou plusieurs BDD a un Host
+App::host(...)->bdd('nom_de_ma_bdd');
 ```
 
 Connexion SqlLite:
@@ -697,21 +709,27 @@ Connexion PostgreSQL
 
 Exemple de request effectuable grâce au Query Builder Pixie:
 ```php
+//récupérer une BDD
+$bdd = getbdd('nom_de_ma_bdd');
+
 //Création d'une query d'exemple:
-$ret= App::query('ma_table')->select('*')->where('id','=', $id )->get();
+$ret= $bdd->query('ma_table')->select('*')->where('id','=', $id )->get();
 
 //Compter le nombre de résultat avec un LIKE
-$nb= App::query('ma_table')->where('id','LIKE','%'.$id.'%')->count();
+$nb= $bdd->query('ma_table')->where('id','LIKE','%'.$id.'%')->count();
 
 //Premier résultat
-$ret = App::query('ma_table')->first();
+$ret = $bdd->query('ma_table')->first();
 
 //Tous les résultats ( exemple jointure )
-$ret= App::query('ma_table,ma_table2')
+$ret= $bdd->query('ma_table,ma_table2')
 ->where('ma_table.id','=','ma_table2.id')->get();
 
 //Trouver tous les élements égales à
-$ret= App::query('ma_table')->findAll('name', 'Sana');
+$ret= $bdd->query('ma_table')->findAll('name', 'Sana');
+
+//Query Rapide via App
+$ret = App::query('nom_de_ma_bdd','ma_table')->...->get();
 ```
 
 
