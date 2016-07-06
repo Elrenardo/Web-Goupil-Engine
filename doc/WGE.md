@@ -58,6 +58,10 @@ Exemple de code minimal pour le fichier __index.php__ vide:
 require_once './vendor/autoload.php';
 use WGE\App;
 
+//Activer debug PHP
+App::PHPdebugOn(); 
+//App::PHPdebugOff(); //debug PHP off
+
 //Code "Web Goupil Engine" ici
 ```
 
