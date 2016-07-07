@@ -35,5 +35,3 @@ App::home('mySite')->path('homes/mySite/')->file('index.php');
 */
 $home = App::getCurrentHost();
 App::host( $home )->home('mySite');
-
-

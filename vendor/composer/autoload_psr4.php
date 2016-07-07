@@ -6,5 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'WGE\\' => array($vendorDir . '/wge'),
+    'WebSockets\\' => array($vendorDir . '/ghedipunk/PHP-Websockets'),
+    'WGE\\' => array($vendorDir . '/elrenardo/web-goupil-engine'),
 );

@@ -182,5 +182,4 @@ class Bdd
 		
 		return new \Pixie\Connection( $this->config['driver'], $this->config, $this->name );
 	}
-
 };

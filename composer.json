@@ -1,33 +1,18 @@
 {
-    "name"        : "FoxCMS",
-    "description" : "CMS de création de site web",
+    "name"        : "Web-Goupil-Engine",
+    "description" : "Framework Web",
     "version"     : "1",
     "license"     : "GPL v3",
-    "bugs"        : "https://github.com/Elrenardo/FoxCMS/issues",
+    "bugs"        : "https://github.com/Elrenardo/Web-Goupil-Engine/issues",
 
     "authors":[
         {
             "name" : "Teysseire Guillaume",
             "email": "teysseire@studiogoupil.fr",
-            "role": "Developer"
+            "role" : "Developer"
         }
     ],
     
-    "repositories":[
-        {
-            "type"   : "package",
-            "package": {
-                "name"   : "codemirror/CodeMirror",
-                "version": "dev-master",
-                "source" :{
-                    "url"      : "https://github.com/codemirror/CodeMirror.git",
-                    "type"     : "git",
-                    "reference": "origin/master"
-                }
-            }
-        }
-    ],
-
     "require":{
         "php"                         : ">=5.6",
         "twig/twig"                   : "~1.0",
@@ -35,7 +20,11 @@
         "usmanhalalit/pixie"          : "2.*@dev"
     },
 
-    "autoload":{
-       "psr-4":{ "WGE\\":"vendor/wge/" }
+    "autoload":
+    {
+       "psr-4":{ 
+            "WGE\\": "vendor/elrenardo/web-goupil-engine/",
+            "WebSockets\\": "vendor/ghedipunk/PHP-Websockets/"
+        }
     }
 }
