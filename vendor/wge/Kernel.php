@@ -69,15 +69,11 @@ class Kernel extends Multiton
 	private function exec()
 	{
 		//Chargement du registre
-		$plugins = App::getService('plugins');
 		$config  = App::getService('config');
 		$router  = App::getService('router');
 
-		//si pas de home
-		if( Host::getHome() == '' )
-			die('No Host declared for '.App::getCurrentHost() );
 
-		$path_home = $plugins[ Host::getHome() ]->getPath();
+		$path_home = self::pathHome( $path );
 		$config->load( $path_home.'register.json');
 
 		//Ajout des routes
@@ -200,9 +196,26 @@ class Kernel extends Multiton
 	* @brief génére un chemain relatif
 	* @param $path chemain
 	*/
-	public static function path( $path )
+	public static function path( $path='' )
 	{
 		return self::$basepath.self::$pluginpath.$path;
+	}
+
+
+	/**
+	* @brief génére un chemain relatif depuis le "home"
+	* @param $path chemain
+	*/
+	public static function pathHome( $path='' )
+	{
+		//Chargement du registre
+		$plugins = App::getService('plugins');
+
+		//si pas de home
+		if( Host::getHome() == '' )
+			die('No "Home" declared for Host: '.App::getCurrentHost() );
+
+		return $plugins[ Host::getHome() ]->getPath() . $path;
 	}
 
 

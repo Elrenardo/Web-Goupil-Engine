@@ -292,7 +292,19 @@ class App
 	public static function path( $path='' )
 	{
 		self::start();
-		return self::$service->get('kernel')->path( $path );
+		return Kernel::path( $path );
+	}
+
+
+	/**
+	* @brief renvoi un lien relatif complet des fichiers vers le home
+	* @param $path chemain du fichier
+	* @return chemain
+	*/
+	public static function pathHome( $path='' )
+	{
+		self::start();
+		return Kernel::pathHome( $path );
 	}
 
 	/**
