@@ -22,3 +22,4 @@ Il prend aussi en charge tout un panel de fonctionnalités très simple pour man
 [ Twig ](http://twig.sensiolabs.org/)<br/>
 [ AltoRouter ](http://altorouter.com/)<br/>
 [ Pixie Query Builder ](https://github.com/usmanhalalit/pixie)<br/>
+[ PHP WebSockets ](https://github.com/ghedipunk/PHP-Websockets)<br/>
