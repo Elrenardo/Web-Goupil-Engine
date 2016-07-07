@@ -3,6 +3,7 @@
  * @author    Teysseire Guillaume
  * @version   1.0
  * @date      28/04/2016
+ * @update    07/07/2016
  * @brief     WGE / App: Interface d'utilisation de l'api
  */
 
@@ -14,15 +15,11 @@ class App
 	*/
 	const IDSTART = 'wge.app.start';
 
+
 	/**
 	* @brief identifiant 
 	*/
 	const IDREST = 'rest';
-
-	/**
-	* @brief connexion query
-	*/
-	private static $bdd_co = false;
 
 
 	/**
@@ -58,6 +55,9 @@ class App
 
 			//Création service plugins
 			self::$service->add( 'plugins', array() );
+
+			//Création service BDD
+			self::$service->add( 'bdd', array() );
 
 			//Création service REST
 			self::$service->add( 'REST', array() );
@@ -401,39 +401,32 @@ class App
 		$render = App::getService('render');
 
 		//Ajout fonction twig
-		$render->addFuncTpl('path', function($path)
-		{
+		$render->addFuncTpl('path', function($path){
 			return \WGE\App::path( $path );
 		});
-		$render->addFuncTpl('pathUrl', function($url)
-		{
+		$render->addFuncTpl('pathUrl', function($url){
 			return \WGE\App::url( \WGE\App::path( $url ) );
 		});
-		$render->addFuncTpl('template', function($name)
-		{
+		$render->addFuncTpl('template', function($name){
 			return \WGE\App::getService('render')->getTemplate( $name );
 		});
 		//vérifie si on posséde une authorisation
-		$render->addFuncTpl('isAuth', function( $auth )
-		{
+		$render->addFuncTpl('isAuth', function( $auth ){
 			return \WGE\App::isAuth( $auth );
 		});
 		//renvoi le path celons la nom de la route
-		$render->addFuncTpl('route', function( $name, $param='' )
-		{
+		$render->addFuncTpl('route', function( $name, $param='' ){
 			if( $param != '' )
 				$param = '/'.$param;
 			
 			return 'http://'.\WGE\Host::getCurrentHost().\WGE\Route::getPathToName( $name ).$param;
 		});
 		//Rest Client
-		$render->addFuncTpl('RESTclient', function( $url, $tab=array() )
-		{
+		$render->addFuncTpl('RESTclient', function( $url, $tab=array() ){
 			return \WGE\App::RESTclient( $url, $tab );
 		});
 		//Traduction
-		$render->addFuncTpl('translate', function( $key )
-		{
+		$render->addFuncTpl('translate', function( $key ){
 			return \WGE\App::getTranslate( $key );
 		});
 	}
@@ -455,34 +448,45 @@ class App
 
 
 	/**
-	* @brief connection BDD
-	* @param $addresse de l'host a contacter default:localhost
-	* @return string, résultat du serveur
+	* @brief creer une connexion BDD
+	* @param $name nom de la connexion BDD
+	* @return class \WGE\bdd
 	*/
-	public static function bdd( $host='localhost' )
+	public static function bdd( $name )
 	{
 		self::start();
 
-		self::$bdd_co = true;
-		$co = new Bdd();
-		$co->host( $host );
+		$co = new Bdd( $name );
+
+		$l = &self::$service->get('bdd');
+		$l[ $name ] = $co;
+
 		return $co;
+	}
+
+	/**
+	* @brief renvoi une instance pour request
+	* @param $nom string: nom de la connexion BDD
+	* @return class QB
+	*/
+	public static function getBdd( $nom )
+	{
+		self::start();
+		return self::$service->get('plugins')[ $nom ];
 	}
 
 	
 
 	/**
 	* @brief renvoi une instance pour request
+	* @param $nom string: nom de la connexion BDD
 	* @param $table string: nom de la table
 	* @return class QB
 	*/
-	public static function query( $table )
+	public static function query( $nom, $table )
 	{
 		self::start();
-
-		if( self::$bdd_co )
-			return BDD::query( $table );
-		die('Apperror: no bdd init !');
+		return self::$service->get('bdd')[ $nom ]->query( $table );
 	}
 
 

@@ -3,19 +3,23 @@
  * @author    Teysseire Guillaume
  * @version   1.0
  * @date      02/05/2016
+ * @update    07/07/2016
  * @brief     WGE / Bdd gestion de la base de donnée pixie
  */
 
 namespace WGE;
 class Bdd
 {
-	private $config = [];
+	private $config  = [];
+	private $name    = '';
+	private $connect = false;
 
 	/**
 	* @brief constructeur
 	*/
-	public function __construct()
+	public function __construct( $name )
 	{
+		$this->name = $name;
 		$this->config['driver']   = 'mysql';
 		$this->config['host']     = 'localhost';
 		$this->config['username'] = 'root';
@@ -30,12 +34,13 @@ class Bdd
 	* @param $table string: nom de la table
 	* @return instance QB;
 	*/
-	public static function query( $table )
+	public function query( $table )
 	{
-		if( !class_exists('\QB'))
-			die('BDD not initialised !');
+		if( !class_exists('\\'.$this->name))
+			die('BDD: '.$this->name.' not initialised !');
 
-		return \QB::table( $table );
+		$class = $this->name;
+		return $class::table( $table );
 	}
 
 
@@ -167,10 +172,15 @@ class Bdd
 
 	/**
 	* @brief ce connecter à la BDD
+	* @param return pixie etat connexion sinnon undefined
 	*/
-	public function connexion()
+	public function connection()
 	{
-		return new \Pixie\Connection( $this->config['driver'], $this->config, 'QB');
+		if( $this->connect)
+			return undefined;
+		$this->connect = true;
+		
+		return new \Pixie\Connection( $this->config['driver'], $this->config, $this->name );
 	}
 
 };

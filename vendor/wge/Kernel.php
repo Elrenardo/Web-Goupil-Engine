@@ -3,6 +3,7 @@
  * @author    Teysseire Guillaume
  * @version   1.0
  * @date      28/04/2016
+ * @update    07/07/2016
  * @brief     WGE / Kernel gestion du noyeau et éxécution
  */
 
@@ -68,12 +69,15 @@ class Kernel extends Multiton
 	*/
 	private function exec()
 	{
+		//chargement du Host principal
+		Host::load();
+
 		//Chargement du registre
 		$config  = App::getService('config');
 		$router  = App::getService('router');
 
 
-		$path_home = self::pathHome( $path );
+		$path_home = self::pathHome();
 		$config->load( $path_home.'register.json');
 
 		//Ajout des routes

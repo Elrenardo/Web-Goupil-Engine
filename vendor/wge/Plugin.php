@@ -12,6 +12,7 @@ class Plugin
 	private $name  = '';
 	private $files = [];
 	private $path  = '';
+	private $load  = false;
 
 
 	/**
@@ -53,6 +54,12 @@ class Plugin
 	*/
 	public function load()
 	{
+		//empecher un double chargement
+		if( $this->load )
+			return;
+		$this->load = true;
+
+		//charger le plugin
 		$plugin_path = Kernel::getPluginPath();
 		Kernel::setPluginPath( $this->path );
 
