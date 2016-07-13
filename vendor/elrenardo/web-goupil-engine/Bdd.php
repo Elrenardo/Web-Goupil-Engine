@@ -50,17 +50,19 @@ class Bdd
 	* @param array des champs a créer
 	* @return création réussi ou pas
 	*/
-	static public function create( $name, array $tab)
+	public function create( $name, array $tab)
 	{
+		if( !class_exists('\\'.$this->name))
+			die('BDD: '.$this->name.' not initialised !');
+		
 		$req = 'CREATE TABLE IF NOT EXISTS '.$name.' ( id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT';
 		foreach ($tab as $key => $value)
 				$req .= ', `'.$value[0].'` '.$value[1];
 		$req .= ', PRIMARY KEY (id))';
 
-		//création de la table
-		if( class_exists('\QB'))
-			return \QB::query( $req );
-		die('BDD not initialised !');
+
+		$class = $this->name;
+		return $class::query( $req );
 	}
 	
 
