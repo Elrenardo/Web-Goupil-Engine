@@ -116,7 +116,7 @@ class Route
 		{
 			$bd    = $route->getData();
 			$path  = App::path($bd.$param['file']);
-			$url   = App::url( Host::getHome(), $path );
+			$url   = App::url( Host::getHome(), $bd.$param['file'] );
 
 			if( !file_exists( $path ))
 				return '404';
