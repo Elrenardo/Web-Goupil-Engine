@@ -57,8 +57,8 @@ class Bdd
 		
 		$req = 'CREATE TABLE IF NOT EXISTS '.$name.' ( ';
 		foreach ($tab as $key => $value)
-				$req .= ', `'.$value[0].'` '.$value[1];
-		$req .= ', PRIMARY KEY ('.$primaryKey.'))';
+				$req .= '`'.$value[0].'` '.$value[1].', ';
+		$req .= 'PRIMARY KEY (`'.$primaryKey.'`))';
 
 
 		$class = $this->name;
@@ -181,7 +181,12 @@ class Bdd
 		if( $this->connect)
 			return undefined;
 		$this->connect = true;
+
+		//si pas de database
+		if($this->config['database'] == '')
+			die('BDD connection no database selected !');
 		
+		//connexion PIXIE query builder
 		return new \Pixie\Connection( $this->config['driver'], $this->config, $this->name );
 	}
 };

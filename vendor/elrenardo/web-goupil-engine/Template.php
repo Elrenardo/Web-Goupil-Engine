@@ -25,6 +25,7 @@ class Template
 	public function name( $name )
 	{
 		$this->name   = $name;
+		$this->plugin = Plugin::getPluginNameLoad();
 
 		return $this;
 	}

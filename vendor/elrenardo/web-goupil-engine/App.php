@@ -482,7 +482,7 @@ class App
 	public static function getBdd( $nom )
 	{
 		self::start();
-		return self::$service->get('plugins')[ $nom ];
+		return self::$service->get('bdd')[ $nom ];
 	}
 
 	

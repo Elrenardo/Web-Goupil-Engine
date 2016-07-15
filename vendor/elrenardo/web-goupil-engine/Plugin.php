@@ -15,6 +15,8 @@ class Plugin
 	private $path  = '';
 	private $load  = false;
 
+	private static $plugin_name_load = NULL;
+
 
 	/**
 	* @brief constructeur class
@@ -64,8 +66,12 @@ class Plugin
 		$plugin_path = Kernel::getPluginPath();
 		Kernel::setPluginPath( $this->path );
 
+		self::$plugin_name_load = $this->name;
+
 		foreach ($this->files as $key => $value)
 			require_once App::path( $value );
+
+		self::$plugin_name_load = NULL;
 
 		Kernel::setPluginPath( $plugin_path );
 	}
@@ -97,5 +103,14 @@ class Plugin
 	public function getFiles()
 	{
 		return $this->files;
+	}
+
+	/**
+	* @brief renvoi le nom du plugin en cours de chargement
+	* @return string
+	*/
+	public function getPluginNameLoad()
+	{
+		return self::$plugin_name_load;
 	}
 };
