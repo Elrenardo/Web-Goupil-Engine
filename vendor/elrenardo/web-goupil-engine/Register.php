@@ -2,6 +2,7 @@
 /**
  * @author    Teysseire Guillaume
  * @date      08/05/2016
+ * @update    15/07/2016
  * @brief     WGE / Register gestion des registres
  */
 
@@ -22,8 +23,6 @@ class Register extends Multiton
 	public function load( $path )
 	{
 		$kernel = App::getService('kernel');
-
-		$path = $kernel->getRealPath( $path );
 		if( !file_exists($path))
 			file_put_contents( $path , '{}');
 		

@@ -3,7 +3,7 @@
  * @author    Teysseire Guillaume
  * @version   1.0
  * @date      02/05/2016
- * @update    07/07/2016
+ * @update    15/07/2016
  * @brief     WGE / Bdd gestion de la base de donnée pixie
  */
 
@@ -50,15 +50,15 @@ class Bdd
 	* @param array des champs a créer
 	* @return création réussi ou pas
 	*/
-	public function create( $name, array $tab)
+	public function create( $name, array $tab, $primaryKey )
 	{
 		if( !class_exists('\\'.$this->name))
 			die('BDD: '.$this->name.' not initialised !');
 		
-		$req = 'CREATE TABLE IF NOT EXISTS '.$name.' ( id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT';
+		$req = 'CREATE TABLE IF NOT EXISTS '.$name.' ( ';
 		foreach ($tab as $key => $value)
 				$req .= ', `'.$value[0].'` '.$value[1];
-		$req .= ', PRIMARY KEY (id))';
+		$req .= ', PRIMARY KEY ('.$primaryKey.'))';
 
 
 		$class = $this->name;

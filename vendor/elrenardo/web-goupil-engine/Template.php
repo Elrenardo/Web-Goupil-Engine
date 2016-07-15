@@ -3,6 +3,7 @@
  * @author    Teysseire Guillaume
  * @version   1.0
  * @date      03/05/2016
+ * @update    15/07/2016
  * @brief     WGE / Template création de nouveau template
  */
 use \WGE\App;
@@ -47,7 +48,7 @@ class Template
 	*/
 	public function path( $path )
 	{
-		$this->path = App::path($path);
+		$this->path = $path;
 		return $this;
 	}
 
