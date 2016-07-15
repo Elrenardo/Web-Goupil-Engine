@@ -445,6 +445,12 @@ App::addFuncTpl('nom_de_la_fonction',function( ... ){
 ```
 
 
+###TemplateHomeRepertory:
+```php
+Route()->templateHomeRepertory('ma_template');
+```
+Cette Template a pour but de créer un accès virtuel vers les fichiers ce trouvant dedans ce qui permet de dire que tous le dossier ou se trouve la Template sera accessible directement à la racine du site !
+
 
 
 
