@@ -8,6 +8,7 @@
  */
 use \WGE\App;
 use \WGE\Host;
+use \WGE\Plugin;
 
 namespace WGE;
 class Template

@@ -109,7 +109,7 @@ class Plugin
 	* @brief renvoi le nom du plugin en cours de chargement
 	* @return string
 	*/
-	public function getPluginNameLoad()
+	public static function getPluginNameLoad()
 	{
 		return self::$plugin_name_load;
 	}
