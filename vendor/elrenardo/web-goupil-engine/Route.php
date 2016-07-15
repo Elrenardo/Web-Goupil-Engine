@@ -3,6 +3,7 @@
  * @author    Teysseire Guillaume
  * @version   1.0
  * @date      28/04/2016
+ * @update    15/07/2016
  * @brief     WGE / Route Fabrication et gestion des routes
  */
 
@@ -97,7 +98,7 @@ class Route
 	* @param $name:string
 	* @return this
 	*/
-	public function templateRepertory( $name )
+	public function templateHomeRepertory( $name )
 	{
 		//Template
 		$this->template( $name );
@@ -113,12 +114,11 @@ class Route
 		->setData( $bd )
 		->controller(function( $route, $param )
 		{
-			$bd = $route->getData();
-			$path         = App::path($bd.$param['file']);
-			$path_complet = App::getRealPath( $path );
-			$url          = App::url( $path );
+			$bd    = $route->getData();
+			$path  = App::path($bd.$param['file']);
+			$url   = App::url( Host::getHome(), $path );
 
-			if( !file_exists( $path_complet ))
+			if( !file_exists( $path ))
 				return '404';
 
 			//création des headers du document a afficher
@@ -126,7 +126,7 @@ class Route
 			foreach ($ret as $key => $value){
 				header($value);
 			}
-			return file_get_contents( $path_complet );
+			return file_get_contents( $path );
 		});
 
 		return $this;

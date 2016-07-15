@@ -3,6 +3,7 @@
  * @author    Teysseire Guillaume
  * @version   1.0
  * @date      05/05/2016
+ * @update    15/07/2016
  * @brief     WGE / Plugin gestion des plugin et plugin home des sites
  */
 
@@ -32,7 +33,7 @@ class Plugin
 	*/
 	public function path( $path )
 	{
-		$this->path = App::path($path);
+		$this->path = $path;
 		return $this;
 	}
 
@@ -64,7 +65,7 @@ class Plugin
 		Kernel::setPluginPath( $this->path );
 
 		foreach ($this->files as $key => $value)
-			require_once App::getRealPath( $this->path.$value );
+			require_once App::path( $value );
 
 		Kernel::setPluginPath( $plugin_path );
 	}

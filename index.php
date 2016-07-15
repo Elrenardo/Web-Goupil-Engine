@@ -10,8 +10,7 @@ use WGE\App;
 | Declare the plugin here and Man will be loaded by Web goupil Engine
 |
 */
-App::home('mySite')->path('homes/mySite/')->file('index.php');
-
+App::home('mySite')->path('homes/mySite/')->file('mySite.php');
 
 
 /*
@@ -22,7 +21,7 @@ App::home('mySite')->path('homes/mySite/')->file('index.php');
 | Declare the database here
 |
 */
-
+//App::bdd('nom_de_ma_bdd')->host('localhost')->user('root')->password('')->database('mybase');
 
 
 /*

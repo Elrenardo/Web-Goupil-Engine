@@ -14,10 +14,9 @@ class Kernel extends Multiton
 	private $routes = array();
 	private $auth   = array();
 
-	private $realpath = '';
-
-	//route
-	private static $basepath   = '';
+	//réelle route
+	private static $realpath   = '';
+	private static $urlpath   = '';
 	private static $pluginpath = '';
 
 	/**
@@ -34,7 +33,7 @@ class Kernel extends Multiton
 			session_start();
 
 		//Récupérer le realpath
-		$this->realpath = realpath('./').'/';
+		self::$realpath = realpath('./').'/';
 
 		//Sécurité
 		$this->security();
@@ -202,7 +201,7 @@ class Kernel extends Multiton
 	*/
 	public static function path( $path='' )
 	{
-		return self::$basepath.self::$pluginpath.$path;
+		return self::getRealPath().self::$pluginpath.$path;
 	}
 
 
@@ -219,7 +218,23 @@ class Kernel extends Multiton
 		if( Host::getHome() == '' )
 			die('No "Home" declared for Host: '.App::getCurrentHost() );
 
-		return $plugins[ Host::getHome() ]->getPath() . $path;
+		return self::getRealPath() . $plugins[ Host::getHome() ]->getPath(). $path;
+	}
+
+
+	/**
+	* @brief returne un path au format URL pour le home
+	* @param $path chemain
+	*/
+	public static function url( $plugin, $url='' )
+	{
+		$plugins = App::getService('plugins');
+
+		if( !isset($plugins[ $plugin ]))
+			exit('Url: plugin lost: '.$plugin);
+
+		//return 'http://'.$_SERVER['HTTP_HOST'].'/'.self::$urlpath.self::$pluginpath.$url;
+		return 'http://'.$_SERVER['HTTP_HOST'].'/'.self::$urlpath . $plugins[ $plugin ]->getPath() . $url;
 	}
 
 
@@ -281,9 +296,20 @@ class Kernel extends Multiton
 	* @param $path:string chemain a rajouter
 	* @return string
 	*/
-	public function getRealPath( $path='' )
+	public static function getRealPath( $path='' )
 	{
-		return $this->realpath.$path;
+		return self::$realpath.$path;
+	}
+
+
+
+	/**
+	* @brief défini la racine d'utilisation des URL
+	* @param $path:string chemain a rajouter
+	*/
+	public static function setUrlPath( $path )
+	{
+		self::$urlpath = $path;
 	}
 
 

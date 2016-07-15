@@ -16,10 +16,10 @@
     <title>{% block title %}Demo Web-Goupil-Engine{% endblock%}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{{path('web/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ url( 'mySite', 'web/css/bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{{path('web/css/narrow-jumbotron.css')}}" rel="stylesheet">
+    <link href="{{ url( 'mySite', 'web/css/narrow-jumbotron.css')}}" rel="stylesheet">
 
     {% block css %}{% endblock %}
   </head>
@@ -36,7 +36,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="{{path('web/js/ie10-viewport-bug-workaround.js')}}"></script>
+    <script src="{{ url( 'mySite', 'web/js/ie10-viewport-bug-workaround.js')}}"></script>
 
     {% block js %}{% endblock %}
   </body>

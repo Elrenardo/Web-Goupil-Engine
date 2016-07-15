@@ -3,6 +3,7 @@
  * @author    Teysseire Guillaume
  * @version   1.0
  * @date      03/05/2016
+ * @update    15/07/2016
  * @brief     WGE / TemplateRender Gestion des templates
  */
 use \WGE\App;
@@ -42,10 +43,12 @@ class TemplateRender extends Multiton
 
 			if( isset( $plugins[ $home ] ))
 			{
-				$kernel->setPluginPath( $plugins[ $tpl->getPlugin() ]->getPath() );
-				//var_dump( $kernel->getRealPath( $tpl->getPath() ));
+				$path_plugin = $plugins[ $tpl->getPlugin() ]->getPath();
+				$kernel->setPluginPath( $path_plugin );
+				
 				//$r = 'C:\xampp\htdocs\dd0\homes\default\theme\index.twig';
-				$ret =  $this->render->render( $tpl->getPath(), $param );
+				//App::debug( $tpl->getPath() );
+				$ret =  $this->render->render( $path_plugin.$tpl->getPath(), $param );
 			}
 			else
 				$ret = 'Error lost "home" Host::$home !';
@@ -74,7 +77,13 @@ class TemplateRender extends Multiton
 	public function getTemplate( $name )
 	{
 		if( isset( $this->templates[ $name ] ))
-			return $this->templates[ $name ]->getPath();
+		{
+			$tpl = $this->templates[ $name ];
+			$plugins = App::getService('plugins'); 
+			$path_plugin = $plugins[ $tpl->getPlugin() ]->getPath();
+
+			return $path_plugin.$tpl->getPath();
+		}
 		return '';
 	}
 

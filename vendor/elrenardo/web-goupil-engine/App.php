@@ -3,19 +3,13 @@
  * @author    Teysseire Guillaume
  * @version   1.0
  * @date      28/04/2016
- * @update    07/07/2016
+ * @update    15/07/2016
  * @brief     WGE / App: Interface d'utilisation de l'api
  */
 
 namespace WGE;
 class App
 {
-	/**
-	* @brief identifiant de la global utilisé pour la création du kernel 
-	*/
-	const IDSTART = 'wge.app.start';
-
-
 	/**
 	* @brief identifiant 
 	*/
@@ -27,6 +21,11 @@ class App
 	*/
 	private static $service = NULL;
 
+	/**
+	* @brief clef de veroullage pour empecher la double création de l'App
+	*/
+	private static $build = false;
+
 
 	/**
 	* @brief  fonction static de création du kernel
@@ -34,9 +33,9 @@ class App
 	private static function start()
 	{
 		//la GLOBAL permet d'identifier la premiére instance pour créer le kernel
-		if( !isset($GLOBALS[ self::IDSTART ]))
+		if( !self::$build )
 		{
-			$GLOBALS[ self::IDSTART ] = true;
+			self::$build = true;
 
 			//Création du gestionnaire de service
 			self::$service = new Container();
@@ -96,6 +95,7 @@ class App
 		$buffer = substr($buffer,1);//enlever le premier "/"
 		$buffer = $buffer.'/';
 		//set base path
+		Kernel::setUrlPath( $buffer );
 		App::setBasePath( $buffer );
 	}
 
@@ -195,7 +195,20 @@ class App
 	*/
 	public static function home( $name )
 	{
+		self::start();
 		return self::plugin( $name );
+	}
+
+
+
+	/**
+	* @brief renvoi le nom du plugin home
+	* @return string
+	*/
+	public static function getHome()
+	{
+		self::start();
+		return Host::getHome();
 	}
 
 
@@ -312,9 +325,9 @@ class App
 	* @param $url a ajouter
 	* @return string
 	*/
-	public static function url( $url = '' )
+	public static function url( $plugin, $url='' )
 	{
-		return 'http://'.$_SERVER['HTTP_HOST'].'/'.Route::getBasePath().$url;
+		return Kernel::url( $plugin, $url );
 	}
 
 
@@ -401,11 +414,8 @@ class App
 		$render = App::getService('render');
 
 		//Ajout fonction twig
-		$render->addFuncTpl('path', function($path){
-			return \WGE\App::path( $path );
-		});
-		$render->addFuncTpl('pathUrl', function($url){
-			return \WGE\App::url( \WGE\App::path( $url ) );
+		$render->addFuncTpl('url', function( $url, $path){
+			return \WGE\App::url( $url, $path );
 		});
 		$render->addFuncTpl('template', function($name){
 			return \WGE\App::getService('render')->getTemplate( $name );
