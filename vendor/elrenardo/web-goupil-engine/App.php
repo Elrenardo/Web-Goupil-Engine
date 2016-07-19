@@ -3,7 +3,7 @@
  * @author    Teysseire Guillaume
  * @version   1.0
  * @date      28/04/2016
- * @update    15/07/2016
+ * @update    16/07/2016
  * @brief     WGE / App: Interface d'utilisation de l'api
  */
 
@@ -626,7 +626,10 @@ class App
 	}
 
 
-
+	/**
+	* @brief affiche le contenu d'une variable dans un var_dump + <pre>
+	* @param variable a debuger dans un var_dump
+	*/
 	public static function debug( $buffer )
 	{
 		echo '<pre>';
@@ -635,14 +638,46 @@ class App
 	}
 
 
+	/**
+	* @brief active le débugage PHP
+	*/
 	public static function PHPdebugOn()
 	{
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 	}
+
+
+	/**
+	* @brief desactive le débugage PHP
+	*/
 	public static function PHPdebugOff()
 	{
 		error_reporting(0);
 		ini_set('display_errors', 0);
+	}
+
+
+
+	/**
+	* @brief desactive le cache template
+	*/
+	public static function cacheOff()
+	{
+		self::start();
+		$render = self::$service->get('render');
+		$render->cacheOff();
+	}
+
+
+
+	/**
+	* @brief active le cache template
+	*/
+	public static function cacheOn()
+	{
+		self::start();
+		$render = self::$service->get('render');
+		$render->cacheOn();
 	}
 };

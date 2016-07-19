@@ -3,7 +3,7 @@
  * @author    Teysseire Guillaume
  * @version   1.0
  * @date      03/05/2016
- * @update    15/07/2016
+ * @update    16/07/2016
  * @brief     WGE / TemplateRender Gestion des templates
  */
 use \WGE\App;
@@ -13,6 +13,7 @@ class TemplateRender extends Multiton
 {
 	private $templates = [];
 	private $render    = NULL;
+	private $cache     = false;
 
 	/**
 	* @brief  Constructeur de la class template
@@ -21,7 +22,7 @@ class TemplateRender extends Multiton
 	{
 		//App::getRealPath()
 		$loader = new \Twig_Loader_Filesystem( App::getRealPath() );
-		$this->render = new \Twig_Environment($loader, array( 'cache'=>false ));
+		$this->render = new \Twig_Environment($loader, array( 'cache'=>$this->cache ));
 	}
 
 	/**
@@ -106,4 +107,25 @@ class TemplateRender extends Multiton
 	{
 		$this->render->addGlobal( $name, $obj );
 	}
+
+
+	/**
+	* @brief desactive le cache twig
+	*/
+	public function cacheOff()
+	{
+		$this->cache = false;
+	}
+
+
+	/**
+	* @brief active le cache twig
+	*/
+	public function cacheOn()
+	{
+		$this->cache = Kernel::getPathHome('cache/');
+	}
+
+
+
 };

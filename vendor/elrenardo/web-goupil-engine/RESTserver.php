@@ -49,13 +49,13 @@ class RESTserver
 		if( !is_null($this->auth))
 		{
 			if( !App::isAuth( $this->auth ))
-				return '401';
+				return '405';
 		}
 
 		//éxécuter le controller
 		if( !is_null($this->ctrl))
 		if( method_exists($this->ctrl, $method ))
 			return $this->ctrl->{ $method }( $route, $param );
-		return '';
+		return '400';
 	}
 };

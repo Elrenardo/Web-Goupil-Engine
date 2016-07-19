@@ -22,6 +22,9 @@ class Route
 	private static $name = array();
 	private static $base_path = '';
 
+	//limiter un seul templateHomeRepertory
+	private static $one_thr = false;
+
 
 	/**
 	* @brief constructeur de Route
@@ -94,12 +97,17 @@ class Route
 
 
 	/**
-	* @brief définir un home repertory
+	* @brief création du home repertory
 	* @param $name:string
 	* @return this
 	*/
 	public function templateHomeRepertory( $name )
 	{
+		//un seul templateHomeRepertory
+		if(self::$one_thr)
+			die('templateHomeRepertory limit for once instance !');
+		self::$one_thr = true;
+
 		//Template
 		$this->template( $name );
 
@@ -115,8 +123,9 @@ class Route
 		->controller(function( $route, $param )
 		{
 			$bd    = $route->getData();
-			$path  = App::path($bd.$param['file']);
-			$url   = App::url( Host::getHome(), $bd.$param['file'] );
+			$chm   = $bd.$param['file'];
+			$path  = App::path( $chm );
+			$url   = App::url( Host::getHome(), $chm );
 
 			if( !file_exists( $path ))
 				return '404';

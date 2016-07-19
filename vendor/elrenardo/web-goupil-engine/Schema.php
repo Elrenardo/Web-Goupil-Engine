@@ -29,6 +29,7 @@ class Schema
 
 
 
+
 	/**
 	* @brief convertit un tableau d'entrer celons le shema
 	* @param $input:array
@@ -47,6 +48,7 @@ class Schema
 
 
 
+
 	/**
 	* @brief convertit un tableau comportant plusieurs entrer celons le shema
 	* @param $input:array[ array ]
@@ -58,6 +60,7 @@ class Schema
 			$this->convert( $value );
 		return $multi_input;
 	}
+
 
 
 
@@ -73,6 +76,8 @@ class Schema
 		return $tab;
 	}
 
+
+
 	/**
 	* @brief renvoi la liste des colonnes et type utilisé par le schema 
 	* @return array
@@ -86,4 +91,65 @@ class Schema
 	}
 
 
+
+	/**
+	* @brief formate toute la chaines en minuscule sans toucher au number
+	* @return string
+	*/
+	public static function strtolower( $str )
+	{
+		$type = gettype( $str);
+		if( $type == 'string')
+			return strtolower( $str );
+		return $str;
+	}
+
+
+
+	/**
+	* @brief vérifie que la variable est un email
+	* @param $str:string email
+	* @return true si email sinon false
+	*/
+	public static function isEmail( $str )
+	{
+		if(filter_var( $str, FILTER_VALIDATE_EMAIL))
+			return true;
+		return false;
+	}
+
+
+	/**
+	* @brief convertit un email et vérifie son format
+	* @param $phone:string numéro de téléphone
+	* @return string email sinon NULL
+	*/
+	public static function convertPhoneFR( $phone )
+	{
+		if( $phone[0] == '+' )
+			$phone = '0'.substr( $phone, 3);
+
+		$phone  = preg_replace('/[^0-9]/', '',$phone);
+
+		if( strlen($phone) != 10 )
+			return NULL;
+
+		return $phone;
+	}
+
+
+	/**
+	* @brief génére un UID
+	* @param $car:number nombre de caractére générer
+	* @return string aléatoire
+	*/
+	public static function uid($car=50)
+	{
+		$string = "";
+		$chaine = "abcdefghijklmnpqrstuvwxy0123456789ABCDEFGHIJKLMNOPKRSTUWXYZ";
+		srand((double)microtime()*time());
+		for($i=0; $i<$car; $i++)
+			$string .= $chaine[rand()%strlen($chaine)];
+		return $string;
+	}
 };

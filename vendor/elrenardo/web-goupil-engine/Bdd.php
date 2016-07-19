@@ -12,6 +12,7 @@ class Bdd
 {
 	private $config  = [];
 	private $name    = '';
+	private $class   = '';
 	private $connect = false;
 
 	/**
@@ -19,7 +20,9 @@ class Bdd
 	*/
 	public function __construct( $name )
 	{
-		$this->name = $name;
+		$this->name  = $name;
+		$this->class = '\\'.$name;
+
 		$this->config['driver']   = 'mysql';
 		$this->config['host']     = 'localhost';
 		$this->config['username'] = 'root';
@@ -36,7 +39,7 @@ class Bdd
 	*/
 	public function query( $table )
 	{
-		if( !class_exists('\\'.$this->name))
+		if( !class_exists($this->class))
 			die('BDD: '.$this->name.' not initialised !');
 
 		$class = $this->name;
@@ -52,7 +55,7 @@ class Bdd
 	*/
 	public function create( $name, array $tab, $primaryKey )
 	{
-		if( !class_exists('\\'.$this->name))
+		if( !class_exists($this->class))
 			die('BDD: '.$this->name.' not initialised !');
 		
 		$req = 'CREATE TABLE IF NOT EXISTS '.$name.' ( ';
@@ -185,6 +188,9 @@ class Bdd
 		//si pas de database
 		if($this->config['database'] == '')
 			die('BDD connection no database selected !');
+
+		if( class_exists($this->class))
+			die('BDD: '.$this->name.' initialised !');
 		
 		//connexion PIXIE query builder
 		return new \Pixie\Connection( $this->config['driver'], $this->config, $this->name );
