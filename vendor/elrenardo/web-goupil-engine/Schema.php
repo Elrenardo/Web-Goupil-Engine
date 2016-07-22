@@ -94,6 +94,7 @@ class Schema
 
 	/**
 	* @brief formate toute la chaines en minuscule sans toucher au number
+	* @param $str:string 
 	* @return string
 	*/
 	public static function strtolower( $str )
@@ -102,6 +103,12 @@ class Schema
 		if( $type == 'string')
 			return strtolower( $str );
 		return $str;
+	}
+	public static function arrayStrtolower( $tab )
+	{
+		foreach ($tab as $key => $value)
+			$tab[ $key ] = self::strtolower( $value );
+		return $tab;
 	}
 
 
