@@ -394,11 +394,8 @@ App::route('/')->template('my_template');
 
 'Web Goupil Engine' ajoute automatiquement plusieurs fonctions au Template TWIG pour vous faciliter son utilisation. En voici quelques une:
 ```html
-<!-- Convertit le chemin d'un plugin en chemin complet -->
-{{ path('/tpl/image.jpg') }} <!-- Donnera: /homes/mySite/tpl/image.jpg -->
-
 <!-- Convertit le chemin d'un plugin en chemin complet type url -->
-{{ pathUrl('/tpl/image.jpg') }} <!-- Donnera: http://127.0.0.1/homes/mySite/tpl/image.jpg -->
+{{ url('/tpl/image.jpg') }} <!-- Donnera: http://127.0.0.1/homes/mySite/tpl/image.jpg -->
 
 ```
 
