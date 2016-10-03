@@ -50,7 +50,7 @@ class RegisterKey
 			return $this;
 
 		$this->value = self::mergeObject( $this->value, $value );
-		return ^this;
+		return $this;
 	}
 
 
