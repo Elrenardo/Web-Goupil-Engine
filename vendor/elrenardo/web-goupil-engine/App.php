@@ -3,7 +3,7 @@
  * @author    Teysseire Guillaume
  * @version   1.0
  * @date      28/04/2016
- * @update    16/07/2016
+ * @update    05/10/2016
  * @brief     WGE / App: Interface d'utilisation de l'api
  */
 
@@ -503,14 +503,15 @@ class App
 	/**
 	* @brief créer une nouvelle entré au registre
 	* @param $key:string nom de la clef
+	* @param $force:bool par default si la clef est présence elle sera modifié !
 	* @return class RegisterKey
 	*/
-	public static function register( $key )
+	public static function register( $key, $force=true )
 	{
 		self::start();
 
 		$t = new RegisterKey( $key );
-		self::$service->get('config')->addRegisterKey( $t );
+		self::$service->get('config')->addRegisterKey( $t, $force );
 		return $t;
 	}
 
