@@ -21,6 +21,7 @@ class App
 	*/
 	private static $service = NULL;
 
+	
 	/**
 	* @brief clef de veroullage pour empecher la double création de l'App
 	*/
@@ -81,6 +82,7 @@ class App
 		}
 	}
 
+	
 	/**
 	* @brief  réglage automatique du Base Path pour le router
 	*/
@@ -99,6 +101,7 @@ class App
 		App::setBasePath( $buffer );
 	}
 
+	
 	/**
 	* @brief renvoi un service
 	*/
@@ -108,6 +111,7 @@ class App
 		return self::$service->get( $name );
 	}
 
+	
 	/**
 	* @brief ajoute un nouveau service
 	* @param $name:string nom du service
@@ -168,7 +172,7 @@ class App
 		self::start();
 		return Route::getPathToName( $name );
 	}
-
+	
 
 	/**
 	* @brief création d'un plugin
@@ -187,7 +191,6 @@ class App
 	}
 
 
-
 	/**
 	* @brief création d'un host ( surcharge plugin )
 	* @param 
@@ -200,7 +203,6 @@ class App
 	}
 
 
-
 	/**
 	* @brief renvoi le nom du plugin home
 	* @return string
@@ -210,7 +212,6 @@ class App
 		self::start();
 		return Host::getHome();
 	}
-
 
 
 	/**
@@ -225,6 +226,7 @@ class App
 		return $h;
 	}
 
+	
 	/**
 	* @brief renvoi le nom de domaine utilisé pour afficher le site
 	* @return nom de domaine
@@ -235,6 +237,7 @@ class App
 		return Host::getCurrentHost();
 	}
 
+	
 	/**
 	* @brief  set base path pour le router
 	*/
@@ -247,6 +250,7 @@ class App
 		\WGE\Route::setBasePath( $bp );
 	}
 
+	
 	/**
 	* @brief  set base path pour le router
 	*/
@@ -256,6 +260,7 @@ class App
 		self::$service->get('kernel')->addAuth( $auth );
 	}
 
+	
 	/**
 	* @brief vérifier si on a l'authorisation
 	*/
@@ -275,6 +280,7 @@ class App
 		App::getService('render')->addFuncTpl( $name, $fonction );
 	}
 
+	
 	/**
 	* @brief ajoute un élément global dans le générateur de template
 	*/
@@ -284,6 +290,7 @@ class App
 		App::getService('render')->addGlobalTpl( $name, $obj );
 	}
 
+	
 	/**
 	* @brief Ajouter un template
 	*/
@@ -297,6 +304,7 @@ class App
 		return $buffer;
 	}
 
+	
 	/**
 	* @brief renvoi un lien relatif complet des fichiers
 	* @param $path chemain du fichier
@@ -320,6 +328,7 @@ class App
 		return Kernel::pathHome( $path );
 	}
 
+	
 	/**
 	* @brief renvoi l'url
 	* @param $url a ajouter
@@ -345,6 +354,7 @@ class App
 		return $rest;
 	}
 
+	
 	/**
 	* @brief client REST
 	* @param $route url de la route a contacter
@@ -359,6 +369,7 @@ class App
 		return $c->get();
 	}
 
+	
 	/**
 	* @brief client REST
 	* @param $route url de la route a contacter
@@ -371,6 +382,25 @@ class App
 		if( $post )
 			$c->post( $post );
 		return $c->getArray();
+	}
+	
+	
+	
+	/**
+	* @brief REST direct exec method
+	* @param $route url de la route a contacter
+	* @return string, résultat du serveur
+	*/
+	public static function RESTexec( $ctrl, $method, $data=NULL )
+	{
+		self::start();
+
+		$rest = self::$service->get('REST');
+		//Vérifier que la class REST existe
+		if( !isset( $rest[ $ctrl ]))
+			return 'WGE: error REST !';
+		$buffer = $rest[ $ctrl ];
+		return $buffer->exec( $method, NULL, $data );
 	}
 
 
@@ -596,6 +626,7 @@ class App
 
 	}
 
+	
 	/**
 	* @brief return un schema
 	* @param $name:string nom du schema
@@ -606,7 +637,6 @@ class App
 		self::start();
 		return self::$service->get('schema')[ $name ];
 	}
-
 
 
 	/**
