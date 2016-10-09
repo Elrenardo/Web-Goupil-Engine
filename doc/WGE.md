@@ -573,6 +573,12 @@ Dans les templates:
 {{ RESTclient('nom_du_serveur_rest/method', tab ) }}
 ```
 
+Exécution d'une method REST directement dans un controller de route ou autre :
+```
+//Cette méthode permet de limiter le temps de réponse d'un appel a un client REST ainsi que le transport de données tel que POST... et avoir une réponse uni
+$result = App::RESTexec('rest_serveur', 'method', array(...));
+```
+
 <b style="color:red;">/!\ Attention à l'utilisation du système REST et les données qui peuvent être manipulé! </b><br/>
 Il est possible que des applications tierces ou des personnes mal intentionné détourne vos requêtes REST pour modifier votre site internet à leur guise.
 
